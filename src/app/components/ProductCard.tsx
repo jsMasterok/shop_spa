@@ -1,6 +1,14 @@
 import Image from "next/image";
 
-export default function ProductCard({ img, title, price, type }) {
+export default function ProductCard({
+  title,
+  price,
+  type,
+}: {
+  title: string;
+  price: number;
+  type: string;
+}) {
   return (
     <div className="w-full h-full flex flex-1 shadow-md p-2 rounded-md hover:shadow-lg transition-shadow">
       <div className="flex flex-col w-full gap-y-2 justify-between">

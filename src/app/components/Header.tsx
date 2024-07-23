@@ -6,11 +6,11 @@ export default function Header() {
   const links = [
     {
       name: "Догляд",
-      path: "/",
+      path: "/products",
     },
     {
       name: "Макіяж",
-      path: "/",
+      path: "/products",
     },
     {
       name: "Про нас",

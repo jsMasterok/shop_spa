@@ -12,7 +12,6 @@ export default function SectionsLayout() {
       <Recomedations />
       <Benefits />
       <Description />
-      <Footer />
     </div>
   );
 }

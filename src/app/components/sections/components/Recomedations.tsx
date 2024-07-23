@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ProductCard from "../../ProductCard";
+import ProductCard from "../../../products/components/ProductCard";
 
 export default function Recomedations() {
   return (
@@ -30,10 +30,10 @@ export default function Recomedations() {
         </Link>
       </div>
       <div className="grid grid-cols-2 gap-2 w-full h-full">
-        <ProductCard price={1200} title={"Title"} type={"type"} />
-        <ProductCard price={1200} title={"Title"} type={"type"} />
-        <ProductCard price={1200} title={"Title"} type={"type"} />
-        <ProductCard price={1200} title={"Title"} type={"type"} />
+        <ProductCard img={'/assets/test_1.jpg'} price={1200} title={"Title"} type={"type"} />
+        <ProductCard img={'/assets/test_2.jpg'} price={1200} title={"Title"} type={"type"} />
+        <ProductCard img={'/assets/test_2.jpg'} price={1200} title={"Title"} type={"type"} />
+        <ProductCard img={'/assets/test_1.jpg'} price={1200} title={"Title"} type={"type"} />
       </div>
     </section>
   );

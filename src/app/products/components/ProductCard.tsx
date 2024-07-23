@@ -4,17 +4,19 @@ export default function ProductCard({
   title,
   price,
   type,
+  img,
 }: {
   title: string;
   price: number;
   type: string;
+  img: string;
 }) {
   return (
     <div className="w-full h-full flex flex-1 shadow-md p-2 rounded-md hover:shadow-lg transition-shadow">
       <div className="flex flex-col w-full gap-y-2 justify-between">
-        <div className="w-full h-2/3 rounded-md relative">
+        <div className="w-full flex flex-1 rounded-md relative">
           <Image
-            src={"/assets/hero_1.jfif"}
+            src={img}
             layout="fill"
             objectFit="cover"
             alt="Image"
@@ -22,12 +24,12 @@ export default function ProductCard({
           />
         </div>
         <div className="flex flex-col gap-y-1">
-          <h4 className="text-sm text-slate-500">{title}</h4>
+          <h4 className="text-sm text-slate-500 truncate ">{title}</h4>
           <span className="text-xs text-slate-400">{type}</span>
           <span className="text-xs text-slate-400">{price} UAH</span>
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-x-1 text-center text-sm font-semibold text-slate-400 rounded-md bg-slate-200 py-2"
+            className="w-full flex items-center justify-center gap-x-1 text-center text-xs font-semibold text-slate-400 rounded-md bg-slate-200 py-1 hover:text-slate-200 hover:bg-slate-400 transition-colors"
           >
             Додати в кошик{" "}
             <svg

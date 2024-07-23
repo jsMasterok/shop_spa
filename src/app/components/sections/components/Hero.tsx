@@ -8,7 +8,7 @@ export default function Hero() {
       <div className="flex w-full items-center justify-center h-1/2 relative gap-4">
         <div className="w-2/3 h-full relative rounded-md">
           <Image
-            src={"/assets/hero_3.jpg"}
+            src={"/assets/girl_2.jpg"}
             layout="fill"
             objectFit="cover"
             alt="Image"
@@ -17,7 +17,7 @@ export default function Hero() {
         </div>
         <div className="w-2/3 h-5/6 relative rounded-md">
           <Image
-            src={"/assets/hero_2.jpg"}
+            src={"/assets/hero_cr.jpg"}
             layout="fill"
             objectFit="cover"
             alt="Image"
@@ -26,7 +26,7 @@ export default function Hero() {
         </div>
         <div className="w-28 h-28 left-1/2 -translate-x-1/2 bottom-3 absolute z-10 rounded-md">
           <Image
-            src={"/assets/hero_1.jfif"}
+            src={"/assets/girl_1.jpg"}
             layout="fill"
             objectFit="cover"
             alt="Image"

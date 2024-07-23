@@ -5,12 +5,18 @@ export default function Benefits() {
     <section className="w-full h-screen flex flex-col justify-around gap-y-4 px-2 pb-8 pt-4 ">
       <div className="w-full h-2/3 relative">
         <Image
-          src={"/assets/ben_1.jpg"}
+          src={"/assets/hero_glob.jpg"}
           layout="fill"
           objectFit="cover"
           alt="Image"
-          className="rounded-md p-2"
+          className="rounded-md"
         />
+        <span className="text-base font-semibold text-white absolute top-4 left-1/2 -translate-x-1/2">
+          LOGO
+        </span>
+        <span className="text-base font-semibold text-white absolute bottom-4 left-1/2 -translate-x-1/2">
+          CompanyName
+        </span>
       </div>
       <div className="flex flex-col gap-y-2">
         <h4 className="pacifico-regular text-2xl font-semibold text-slate-600">

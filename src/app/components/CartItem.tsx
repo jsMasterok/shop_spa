@@ -39,7 +39,7 @@ export default function CartItem({
       <div className="flex items-center flex-col gap-y-1">
         <span className="text-xs font-semibold text-slate-600">Сумма</span>
         <span className="text-xs font-semibold text-slate-400">
-          {totalPrice}
+          {parseInt(totalPrice)}
         </span>
       </div>
       <button

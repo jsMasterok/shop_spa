@@ -40,7 +40,7 @@ export default function ProductCard({
         <div className="flex flex-col gap-y-1">
           <h4 className="text-sm text-slate-500 truncate ">{title}</h4>
           <span className="text-xs text-slate-400">{type}</span>
-          <span className="text-xs text-slate-400">{price} UAH</span>
+          <span className="text-xs text-slate-400">{parseInt(price)} UAH</span>
           <button
             onClick={(e) => {
               e.preventDefault();

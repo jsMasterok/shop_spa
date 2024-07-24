@@ -7,10 +7,12 @@ import Link from "next/link";
 import CartItem from "./CartItem";
 import { useState } from "react";
 import classNames from "classnames";
+import { useRouter } from "next/navigation";
 
 export default function Cart() {
   const { data, mutate, isLoading, error } = useSWR(`${API}/cart`, fetcher);
   const [open, setIsopen] = useState<boolean>(false);
+  const router = useRouter();
   if (isLoading || !data) return;
   return (
     <>
@@ -72,7 +74,7 @@ export default function Cart() {
           Кошик
         </h3>
         {/*  */}
-        <div className="flex w-full flex-1 flex-col gap-y-2 py-2">
+        <div className="flex w-full flex-1 flex-col gap-y-2 py-2 overflow-y-auto">
           {data?.map((item, i) => {
             return (
               <CartItem
@@ -89,9 +91,12 @@ export default function Cart() {
           })}
         </div>
         {/*  */}
-        <Link
+        <button
           className="w-full flex items-center justify-center gap-x-1 text-center text-base font-semibold text-slate-400 rounded-md bg-slate-200 py-2 hover:text-slate-200 hover:bg-slate-400 transition-colors"
-          href={"/"}
+          onClick={() => {
+            setIsopen(false);
+            router.push("/payment");
+          }}
         >
           Перейти до сплати
           <svg
@@ -108,7 +113,7 @@ export default function Cart() {
               d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
             />
           </svg>
-        </Link>
+        </button>
       </div>
     </>
   );

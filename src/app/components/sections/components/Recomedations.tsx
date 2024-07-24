@@ -51,34 +51,6 @@ export default function Recomedations() {
             />
           );
         })}
-        {/* <ProductCard
-          id={1}
-          img={"/assets/test_1.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={2}
-          img={"/assets/test_2.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={3}
-          img={"/assets/test_2.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={4}
-          img={"/assets/test_1.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        /> */}
       </div>
     </section>
   );

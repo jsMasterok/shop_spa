@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-
 export default function Hero() {
   return (
     <section className="w-full h-screen flex flex-col justify-around gap-y-4 px-2 pb-8 pt-28 ">
@@ -43,7 +42,7 @@ export default function Hero() {
         </span>
         <Link
           className="border-slate-200 border rounded-full h-20 w-20 relative flex items-center justify-normal ml-auto hover:text-slate-500 hover:border-slate-500 transition-all hover:shadow-sm hover:shadow-slate-500"
-          href={"/"}
+          href={"/products"}
         >
           <span className="inline-flex gap-x-1 text-slate-400 text-xs font-semibold items-center absolute -left-3">
             <svg

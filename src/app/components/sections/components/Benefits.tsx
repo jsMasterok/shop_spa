@@ -29,7 +29,7 @@ export default function Benefits() {
         </span>
         <Link
           className="border-slate-200 border rounded-full h-20 w-20 relative flex items-center justify-normal ml-auto hover:text-slate-500 hover:border-slate-500 transition-all hover:shadow-sm hover:shadow-slate-500"
-          href={"/"}
+          href={"/products"}
         >
           <span className="inline-flex gap-x-1 text-slate-400 text-xs font-semibold items-center absolute -left-3">
             <svg

@@ -1,6 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import ProductCard from "./components/ProductCard";
+import useSWR from "swr";
+import { API } from "../utils/constants";
+import { fetcher } from "../utils/apiClient";
+
 export default function ProductsTemplate() {
+  const { data, mutate, isLoading, error } = useSWR(`${API}/products`, fetcher);
+
+  if (isLoading) return;
+
   return (
     <section className="flex flex-col gap-y-2 p-2 pt-28">
       <Link
@@ -48,54 +58,74 @@ export default function ProductsTemplate() {
         </svg>
       </div>
       <div className="grid grid-cols-2 gap-2 my-2 w-full h-full">
-        <ProductCard
+        {data?.map((product) => {
+          return (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              title={product.name}
+              price={product.price}
+              type={product.type}
+              img={product.images[0]}
+            />
+          );
+        })}
+        {/* <ProductCard
+          id={1}
           img={"/assets/test_1.jpg"}
           price={1200}
           title={"Title"}
           type={"type"}
         />
         <ProductCard
+          id={2}
           img={"/assets/test_2.jpg"}
           price={1200}
           title={"Title"}
           type={"type"}
         />
         <ProductCard
+          id={3}
           img={"/assets/test_2.jpg"}
           price={1200}
           title={"Title"}
           type={"type"}
         />
         <ProductCard
+          id={4}
           img={"/assets/test_1.jpg"}
           price={1200}
           title={"Title"}
           type={"type"}
         />
         <ProductCard
+          id={5}
           img={"/assets/test_1.jpg"}
           price={1200}
           title={"Title"}
           type={"type"}
         />
         <ProductCard
+          id={6}
           img={"/assets/test_2.jpg"}
           price={1200}
           title={"Title"}
           type={"type"}
         />
         <ProductCard
+          id={7}
           img={"/assets/test_2.jpg"}
           price={1200}
           title={"Title"}
           type={"type"}
         />
         <ProductCard
+          id={8}
           img={"/assets/test_1.jpg"}
           price={1200}
           title={"Title"}
           type={"type"}
-        />
+        /> */}
       </div>
     </section>
   );

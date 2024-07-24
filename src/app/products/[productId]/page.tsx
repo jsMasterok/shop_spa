@@ -10,7 +10,7 @@ import useSWR from "swr";
 import { fetcher } from "@/app/utils/apiClient";
 import { API } from "@/app/utils/constants";
 
-export default function productPage() {
+export default function ProductPage() {
   const { data, isLoading, error, mutate } = useSWR(
     `${API}/products/1`,
     fetcher

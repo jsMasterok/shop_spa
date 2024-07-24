@@ -7,7 +7,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function page() {
+export default function Page() {
   const {
     data,
     mutate,
@@ -29,29 +29,21 @@ export default function page() {
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const prices = data?.map((item) => {
+  const prices = data?.map((item: any) => {
     return parseInt(item.total_price);
   });
   const sum = prices?.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
+    (accumulator: number, currentValue: number) => accumulator + currentValue,
     0
   );
 
   const setPayment = async () => {
     setIsLoading(true);
-    await data.map((item) => {
+    await data.map((item: any) => {
       return deleteCartItem(item.id);
     });
     setIsLoading(false);
     router.push("/finish");
-    // deleteCartItem()
-    //   .then(() => {
-    //     mutate();
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //     router.push("/finish");
-    //   });
   };
 
   if (!sum || loadData || !data) return;
@@ -62,7 +54,7 @@ export default function page() {
         Ваше замовлення
       </h3>
       <div className="flex flex-col gap-y-2">
-        {data?.map((item, i) => {
+        {data?.map((item: any, i: number) => {
           return (
             <CartItem
               id={item.id}

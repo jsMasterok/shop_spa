@@ -19,7 +19,7 @@ export default function CartItem({
   name: string;
   type: string;
   count: number;
-  totalPrice: number;
+  totalPrice: any;
 }) {
   const [deleting, setDeleting] = useState<boolean>(false);
 

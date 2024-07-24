@@ -39,7 +39,7 @@ export default function Recomedations() {
         </Link>
       </div>
       <div className="grid grid-cols-2 gap-2 w-full h-full">
-        {data.slice(0, 4).map((item) => {
+        {data.slice(0, 4).map((item: any) => {
           return (
             <ProductCard
               key={item.id}

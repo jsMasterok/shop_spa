@@ -14,10 +14,10 @@ export default function ProductCard({
   id,
 }: {
   title: string;
-  price: number;
+  price: any;
   type: string;
   img: string;
-  id: number;
+  id: string;
 }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);

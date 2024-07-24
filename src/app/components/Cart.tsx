@@ -75,7 +75,7 @@ export default function Cart() {
         </h3>
         {/*  */}
         <div className="flex w-full flex-1 flex-col gap-y-2 py-2 overflow-y-auto">
-          {data?.map((item, i) => {
+          {data?.map((item: any, i: number) => {
             return (
               <CartItem
                 id={item.id}

@@ -13,7 +13,7 @@ export default function PriceBlock({
   img,
   type,
 }: {
-  id: strig;
+  id: string;
   price: number;
   totalCount: number;
   name: string;

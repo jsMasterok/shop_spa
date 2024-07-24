@@ -58,7 +58,7 @@ export default function ProductsTemplate() {
         </svg>
       </div>
       <div className="grid grid-cols-2 gap-2 my-2 w-full h-full">
-        {data?.map((product) => {
+        {data?.map((product:any) => {
           return (
             <ProductCard
               key={product.id}
@@ -70,62 +70,6 @@ export default function ProductsTemplate() {
             />
           );
         })}
-        {/* <ProductCard
-          id={1}
-          img={"/assets/test_1.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={2}
-          img={"/assets/test_2.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={3}
-          img={"/assets/test_2.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={4}
-          img={"/assets/test_1.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={5}
-          img={"/assets/test_1.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={6}
-          img={"/assets/test_2.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={7}
-          img={"/assets/test_2.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        />
-        <ProductCard
-          id={8}
-          img={"/assets/test_1.jpg"}
-          price={1200}
-          title={"Title"}
-          type={"type"}
-        /> */}
       </div>
     </section>
   );

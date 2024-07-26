@@ -21,7 +21,7 @@ export default function PriceBlock({
   type: string;
 }) {
   const [count, setCount] = useState<number>(1);
-  const [totalPrice, setTotalPrice] = useState<number>(price);
+  const [totalPrice, setTotalPrice] = useState<any>(price);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (

@@ -1,4 +1,3 @@
-import Header from "@/app/components/Header";
 import SectionsLayout from "./components/sections/layout";
 
 export default function Home() {

@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import classNames from "classnames";
-import Link from "next/link";
-import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DescriptionBlock({
   compound,
@@ -12,47 +10,75 @@ export default function DescriptionBlock({
   compound: string;
   method: string;
 }) {
-  const [slide, setSlide] = useState<boolean>(false);
+  const [slide, setSlide] = useState<number>(0);
+  const menuData = ["Склад", " Спосіб використання"];
   return (
-    <div className="grid grid-cols-2 gap-2 my-4">
-      <div
-        onClick={() => setSlide(false)}
-        className={classNames(
-          "flex items-center justify-center text-sm font-semibold rounded-md p-1 hover:bg-slate-100 cursor-pointer",
-          {
-            "text-slate-400": slide,
-            "text-slate-600": !slide,
-          }
+    <>
+      <div className="flex items-center justify-start gap-x-2 my-4">
+        {menuData.map((item, index) => (
+          <MenuItem
+            key={index}
+            item={item}
+            isSelected={slide === index}
+            handleClick={() => setSlide(index)}
+          />
+        ))}
+      </div>
+      <AnimatePresence>
+        {slide === 0 && (
+          <motion.p
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            className="leading-5 font-semibold text-sm text-slate-400"
+          >
+            {method}
+          </motion.p>
         )}
-      >
-        Склад
-      </div>
-      <div
-        onClick={() => setSlide(true)}
-        className={classNames(
-          "flex items-center justify-center text-sm font-semibold p-1 hover:bg-slate-100 cursor-pointer rounded-md",
-          {
-            "text-slate-400": !slide,
-            "text-slate-600": slide,
-          }
+        {slide === 1 && (
+          <motion.p
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            className="leading-5 font-semibold text-sm text-slate-400"
+          >
+            {compound}
+          </motion.p>
         )}
-      >
-        Спосіб використання
-      </div>
-      <div className="col-span-2 text-xs font-semibold text-slate-400 leading-5">
-        {slide ? method : compound}
-      </div>
-      <div className="flex items-center justify-center gap-1 w-full col-span-2 mt-2 border-y border-y-slate-100 py-5">
-        <span className="text-base font-semibold text-slate-400">
-          Залишити відгук в
-        </span>
-        <Link
-          href={"/"}
-          className="text-base font-semibold text-slate-600 underline uppercase"
-        >
-          Instagram
-        </Link>
-      </div>
-    </div>
+      </AnimatePresence>
+    </>
   );
+
+  function MenuItem({
+    isSelected,
+    item,
+    handleClick,
+  }: {
+    isSelected: boolean;
+    item: string;
+    handleClick: () => void;
+  }) {
+    return (
+      <motion.div
+        onClick={handleClick}
+        initial={{
+          color: "#b3bbca",
+        }}
+        animate={{
+          color: isSelected ? "#4e5c6c" : "#b3bbca",
+        }}
+        className=" p-2 w-fit cursor-pointer font-semibold text-base"
+      >
+        {item}
+        {isSelected && <ActiveLine />}
+      </motion.div>
+    );
+  }
+
+  function ActiveLine({}) {
+    return (
+      <motion.div
+        className="w-full h-1 bg-slate-600 rounded-md"
+        layoutId="activeItem"
+      ></motion.div>
+    );
+  }
 }

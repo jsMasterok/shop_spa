@@ -25,7 +25,7 @@ export default function PriceBlock({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
-    <div className="grid grid-cols-2 gap-2 my-4">
+    <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 my-4">
       <div className="flex items-center justify-between gap-x-2 border border-slate-100 rounded-md px-2">
         <button
           onClick={() => {
@@ -85,9 +85,9 @@ export default function PriceBlock({
         </button>
       </div>
       <div className="flex items-center justify-center text-base font-semibold text-slate-600">
-        {totalPrice} UAH
+        {parseInt(totalPrice)} UAH
       </div>
-      <div className="col-span-2 w-full">
+      <div className="col-span-2 lg:col-span-1 w-full">
         <button
           onClick={(e) => {
             e.preventDefault();

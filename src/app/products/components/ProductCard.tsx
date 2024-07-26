@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { mutate } from "swr";
+import toast from "react-hot-toast";
 
 export default function ProductCard({
   title,
@@ -32,7 +33,7 @@ export default function ProductCard({
           <Image
             src={img}
             layout="fill"
-            objectFit="cover"
+            objectFit="contain"
             alt="Image"
             className="rounded-md"
           />
@@ -50,7 +51,10 @@ export default function ProductCard({
                 .then(() => {
                   mutate(`${API}/cart`);
                 })
-                .finally(() => setIsLoading(false));
+                .finally(() => {
+                  setIsLoading(false);
+                  toast.success(`Додано до кошика`, {});
+                });
             }}
             type="button"
             className="w-full flex items-center justify-center gap-x-1 text-center text-xs font-semibold text-slate-400 rounded-md bg-slate-200 py-1 hover:text-slate-200 hover:bg-slate-400 transition-colors"

@@ -5,14 +5,16 @@ import ProductCard from "./components/ProductCard";
 import useSWR from "swr";
 import { API } from "../utils/constants";
 import { fetcher } from "../utils/apiClient";
+import RecomendationSkeleton from "../components/skeletons/RecomendationSkeleton";
+import Preloader from "../components/Preloader";
 
 export default function ProductsTemplate() {
   const { data, mutate, isLoading, error } = useSWR(`${API}/products`, fetcher);
 
-  if (isLoading) return;
+  if (isLoading || !data) return <Preloader />;
 
   return (
-    <section className="flex flex-col gap-y-2 p-2 pt-28">
+    <section className="flex flex-col gap-y-2 p-2 lg:px-8 pt-28 max-w-6xl mx-auto">
       <Link
         href={"/"}
         className="inline-flex items-center gap-x-1 text-slate-400 font-semibold text-base"
@@ -57,8 +59,8 @@ export default function ProductsTemplate() {
           />
         </svg>
       </div>
-      <div className="grid grid-cols-2 gap-2 my-2 w-full h-full">
-        {data?.map((product:any) => {
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 my-2 w-full h-full">
+        {data?.map((product: any) => {
           return (
             <ProductCard
               key={product.id}

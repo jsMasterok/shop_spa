@@ -16,7 +16,7 @@ export default function ImageSlider({ images }: { images: [] }) {
         slidesPerView={1}
         modules={[Pagination, A11y]}
         pagination={{ clickable: true }}
-        className="min-w-0 min-h-0 h-52 max-w-full w-full"
+        className="min-w-0 min-h-0 h-52 lg:h-96 max-w-full w-full"
       >
         {images.map((img, i) => {
           return (

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { deleteCartItem } from "../utils/apiClient";
+import toast from "react-hot-toast";
 
 export default function CartItem({
   mutate,
@@ -47,7 +48,10 @@ export default function CartItem({
           setDeleting(true);
           deleteCartItem(id)
             .then(() => mutate())
-            .finally(() => setDeleting(false));
+            .finally(() => {
+              setDeleting(false);
+              toast.success("Товар видалено");
+            });
         }}
         className="w-fit h-fit p-2 bg-red-500 rounded-md hover:bg-red-700 transition-colors"
       >

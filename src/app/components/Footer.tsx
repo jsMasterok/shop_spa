@@ -1,10 +1,18 @@
+import Image from "next/image";
 import React from "react";
 
 export default function Footer() {
   const currentDate = new Date();
   return (
     <footer className="p-2 flex flex-col gap-2 items-center justify-center border-t border-slate-100">
-      <span className="font-semibold text-base text-slate-400 my-2">LOGO</span>
+      <span className="font-semibold text-base text-slate-400 my-2">
+        <Image
+          src={"/assets/logo_dark.svg"}
+          width={100}
+          height={100}
+          alt="logo"
+        />
+      </span>
       <a
         className="text-base font-semibold text-slate-400 hover:underline"
         href="tel:+38077777777"
@@ -38,7 +46,7 @@ export default function Footer() {
         shop@test.com
       </a>
       <span className="text-base font-semibold text-slate-400 hover:underline">
-        © {currentDate.getFullYear()} CompanyName
+        © {currentDate.getFullYear()} BestWishes
       </span>
       <a
         className="text-xs font-semibold text-slate-400 hover:underline mt-4"

@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import ImagesGrid from "../../ImagesGrid";
-
+import ReactPlayer from "react-player";
+import { useEffect, useState } from "react";
+import Preloader from "../../Preloader";
 export default function Hero() {
+  const [ready, setReady] = useState<boolean>(false);
+  useEffect(() => {});
   const textAnim = {
     hidden: {
       x: "-100%",
@@ -32,12 +35,25 @@ export default function Hero() {
   };
 
   return (
-    <section className="w-full h-screen lg:min-h-screen flex flex-col justify-around gap-y-4 px-2 lg:px-8 pb-8 pt-28 overflow-x-hidden max-w-6xl mx-auto">
-      <ImagesGrid />
+    <section className="w-full min-h-screen lg:min-h-screen flex flex-col justify-around gap-y-4 pb-8 pt-20 lg:pt-24 overflow-x-hidden max-w-6xl mx-auto ">
+      <ReactPlayer
+        url={"/assets/hero_video.mov"}
+        width={"100%"}
+        height={"100%"}
+        playing={true}
+        loop={true}
+        muted={true}
+        onReady={() => setReady(true)}
+        controls={false}
+        playsinline={true}
+        style={{
+          borderRadius: "6px",
+        }}
+      />
       <motion.div
         initial={"hidden"}
         whileInView={"visible"}
-        className="flex flex-col lg:w-1/2 lg:ml-auto gap-y-2"
+        className="flex flex-col  px-2 lg:px-8 lg:w-1/2 lg:ml-auto gap-y-2"
       >
         <motion.h1
           variants={textAnim}

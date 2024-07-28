@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Preloader() {
   return (
-    <div className="fixed w-full flex items-center justify-center h-screen bg-white">
+    <div className=" w-full fixed flex items-center z-50 justify-center h-screen bg-white">
       <Image
         src={"/assets/logo_dark.svg"}
         width={200}

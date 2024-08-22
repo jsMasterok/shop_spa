@@ -3,15 +3,29 @@
 import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import useSWR from "swr";
-import { API } from "../utils/constants";
+import { API, BW_API } from "../utils/constants";
 import { fetcher } from "../utils/apiClient";
 import RecomendationSkeleton from "../components/skeletons/RecomendationSkeleton";
 import Preloader from "../components/Preloader";
+import { motion } from "framer-motion";
 
 export default function ProductsTemplate() {
-  const { data, mutate, isLoading, error } = useSWR(`${API}/products`, fetcher);
+  const { data, mutate, isLoading, error } = useSWR(
+    `${BW_API}/wishes`,
+    fetcher
+  );
 
-  if (isLoading || !data) return <Preloader />;
+  const cardAnim = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: (custom: number) => ({
+      opacity: 1,
+      transition: { delay: custom * 0.24 },
+    }),
+  };
+
+  if (isLoading) return <Preloader />;
 
   return (
     <section className="flex flex-col gap-y-2 p-2 lg:px-8 pt-28 max-w-6xl mx-auto">
@@ -60,16 +74,24 @@ export default function ProductsTemplate() {
         </svg>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 my-2 w-full h-full">
-        {data?.map((product: any) => {
+        {data?.wishes?.map((product: any, index) => {
           return (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              title={product.name}
-              price={product.price}
-              type={product.type}
-              img={product.images[0]}
-            />
+            <motion.div
+              whileHover={{ scale: 1.04 }}
+              variants={cardAnim}
+              custom={index + 1}
+              key={product._id}
+              className="cursor-pointer"
+            >
+              <ProductCard
+                key={product._id}
+                id={product._id}
+                title={product.name}
+                price={product.price}
+                type={product.type}
+                img={product.image}
+              />
+            </motion.div>
           );
         })}
       </div>

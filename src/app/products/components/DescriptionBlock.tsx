@@ -6,12 +6,21 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function DescriptionBlock({
   compound,
   method,
+  power,
+  result,
 }: {
   compound: string;
   method: string;
+  power: string;
+  result: string;
 }) {
   const [slide, setSlide] = useState<number>(0);
-  const menuData = ["Склад", " Спосіб використання"];
+  const menuData = [
+    "Склад",
+    " Спосіб використання",
+    "Властивості",
+    "Результат",
+  ];
   return (
     <>
       <div className="flex items-center justify-start gap-x-2 my-4">
@@ -29,18 +38,36 @@ export default function DescriptionBlock({
           <motion.p
             initial={{ height: 0 }}
             animate={{ height: "auto" }}
-            className="leading-5 font-semibold text-sm text-slate-400"
+            className="leading-5 font-semibold text-sm text-slate-400 text-balance"
           >
-            {method}
+            {compound}
           </motion.p>
         )}
         {slide === 1 && (
           <motion.p
             initial={{ height: 0 }}
             animate={{ height: "auto" }}
-            className="leading-5 font-semibold text-sm text-slate-400"
+            className="leading-5 font-semibold text-sm text-slate-400 text-balance"
           >
-            {compound}
+            {method}
+          </motion.p>
+        )}
+        {slide === 2 && (
+          <motion.p
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            className="leading-5 font-semibold text-sm text-slate-400 text-balance"
+          >
+            {power}
+          </motion.p>
+        )}
+        {slide === 3 && (
+          <motion.p
+            initial={{ height: 0 }}
+            animate={{ height: "auto" }}
+            className="leading-5 font-semibold text-sm text-slate-400 text-balance"
+          >
+            {result}
           </motion.p>
         )}
       </AnimatePresence>

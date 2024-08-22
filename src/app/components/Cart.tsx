@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { API } from "../utils/constants";
+import { API, BW_API } from "../utils/constants";
 import { fetcher } from "../utils/apiClient";
 import CartItem from "./CartItem";
 import { useState } from "react";
@@ -10,22 +10,24 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Cart() {
-  const { data, mutate, isLoading, error } = useSWR(`${API}/cart`, fetcher);
+  const { data, mutate, isLoading, error } = useSWR(`${BW_API}/cart`, fetcher);
   const [open, setIsopen] = useState<boolean>(false);
   const router = useRouter();
   const toggleOpen = () => setIsopen(!open);
 
-  if (isLoading || !data) return;
+  console.log(data);
+
+  if (isLoading) return;
   return (
     <>
-      <div>
+      <div className="relative z-30">
         <motion.button
           whileHover={{ scale: 1.2 }}
           onClick={toggleOpen}
           type="button"
           className="hover:bg-slate-100 rounded-md p-1 transition-colors relative"
         >
-          {data.length > 0 && (
+          {data?.length > 0 && (
             <div className="w-4 h-4 flex items-center justify-center rounded-full border-slate-400 border text-slate-400 absolute -top-1 -right-1 text-xs">
               {data.length}
             </div>
@@ -87,7 +89,7 @@ export default function Cart() {
             </h3>
             {/*  */}
             <div className="flex w-full flex-1 flex-col gap-y-2 py-2 overflow-y-auto">
-              {data.length < 1 && (
+              {!data && (
                 <div className="w-full h-full flex items-center justify-center flex-col gap-y-2">
                   <h3 className="text-xl inline-flex items-center gap-x-1 font-semibold text-slate-600">
                     Схоже що кошик порожній
@@ -149,7 +151,7 @@ export default function Cart() {
             </div>
             {/*  */}
             <button
-              disabled={data.length < 1}
+              disabled={!data}
               className="w-full disabled:bg-opacity-20 disabled:cursor-not-allowed disabled:text-slate-300 flex items-center justify-center gap-x-1 text-center text-base font-semibold text-slate-400 rounded-md bg-slate-200 py-2 hover:text-slate-200 hover:bg-slate-400 transition-colors"
               onClick={() => {
                 setIsopen(false);

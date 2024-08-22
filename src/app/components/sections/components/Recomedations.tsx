@@ -2,7 +2,7 @@
 import Link from "next/link";
 import ProductCard from "../../../products/components/ProductCard";
 import useSWR from "swr";
-import { API } from "@/app/utils/constants";
+import { API, BW_API } from "@/app/utils/constants";
 import { fetcher } from "@/app/utils/apiClient";
 import { motion } from "framer-motion";
 import RecomendationSkeleton from "../../skeletons/RecomendationSkeleton";
@@ -10,7 +10,10 @@ import { useMediaQuery } from "usehooks-ts";
 import Preloader from "../../Preloader";
 
 export default function Recomedations() {
-  const { data, isLoading, error, mutate } = useSWR(`${API}/products`, fetcher);
+  const { data, isLoading, error, mutate } = useSWR(
+    `${BW_API}/wishes`,
+    fetcher
+  );
   const cardAnim = {
     hidden: {
       opacity: 0,
@@ -24,7 +27,7 @@ export default function Recomedations() {
   const laptop = useMediaQuery("(min-width:1024px");
   const slice = laptop ? 6 : 4;
 
-  if (!data || isLoading) return <Preloader />;
+  if (isLoading) return <Preloader />;
 
   return (
     <motion.section
@@ -60,18 +63,18 @@ export default function Recomedations() {
         </motion.div>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 w-full h-full">
-        {data.slice(0, slice).map((item: any, index: number) => {
+        {data?.wishes.slice(0, slice).map((item: any, index: number) => {
           return (
             <motion.div
               whileHover={{ scale: 1.04 }}
               variants={cardAnim}
               custom={index + 1}
-              key={item.id}
+              key={item._id}
               className="cursor-pointer"
             >
               <ProductCard
-                id={item.id}
-                img={item.images[0]}
+                id={item._id}
+                img={item.image}
                 price={item.price}
                 title={item.name}
                 type={item.type}

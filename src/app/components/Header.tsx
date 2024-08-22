@@ -31,15 +31,7 @@ export default function Header() {
             whileHover={{ scale: 1.2 }}
             className="cursor-pointer pacifico-regular text-slate-600 text-lg"
           >
-            <Link href={"/"}>
-              BestWishes
-              {/* <Image
-                src={"/assets/logo_dark.svg"}
-                width={60}
-                height={60}
-                alt="img"
-              /> */}
-            </Link>
+            <Link href={"/"}>BestWishes</Link>
           </motion.h4>
           <div className="flex items-center gap-x-2">
             <motion.button

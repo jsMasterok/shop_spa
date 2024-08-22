@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 
-export default function ImageSlider({ images }: { images: [] }) {
+export default function ImageSlider({ image }: { image: any }) {
   return (
     <>
       <Swiper
@@ -18,13 +18,9 @@ export default function ImageSlider({ images }: { images: [] }) {
         pagination={{ clickable: true }}
         className="min-w-0 min-h-0 h-52 lg:h-96 max-w-full w-full"
       >
-        {images.map((img, i) => {
-          return (
-            <SwiperSlide className="w-full h-full" key={i}>
-              <Image src={img} layout="fill" objectFit="contain" alt="Image" />
-            </SwiperSlide>
-          );
-        })}
+        <SwiperSlide className="w-full h-full">
+          <Image src={image} layout="fill" objectFit="contain" alt="Image" />
+        </SwiperSlide>
       </Swiper>
     </>
   );

@@ -1,4 +1,6 @@
 export const API = "https://66a02ab6b132e2c136002ad8.mockapi.io/api/v1";
+export const CRM_API = "DGoEUHrr1gCqM9j6syfSJP4yhYTOjlL3PZFSi16USXq";
+export const BW_API = "http://localhost:4444";
 export const cities = [
   {
     city: "Kyiv",

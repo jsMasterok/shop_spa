@@ -1,23 +1,17 @@
 "use client";
-
-import useSWR from "swr";
-import { API, BW_API } from "../utils/constants";
-import { fetcher } from "../utils/apiClient";
 import CartItem from "./CartItem";
 import { useState } from "react";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "../utils/store";
 
 export default function Cart() {
-  const { data, mutate, isLoading, error } = useSWR(`${BW_API}/cart`, fetcher);
+  const data = useCart((state: any) => state.items);
   const [open, setIsopen] = useState<boolean>(false);
   const router = useRouter();
   const toggleOpen = () => setIsopen(!open);
 
-  console.log(data);
-
-  if (isLoading) return;
   return (
     <>
       <div className="relative z-30">
@@ -89,7 +83,7 @@ export default function Cart() {
             </h3>
             {/*  */}
             <div className="flex w-full flex-1 flex-col gap-y-2 py-2 overflow-y-auto">
-              {!data && (
+              {data.length < 1 && (
                 <div className="w-full h-full flex items-center justify-center flex-col gap-y-2">
                   <h3 className="text-xl inline-flex items-center gap-x-1 font-semibold text-slate-600">
                     Схоже що кошик порожній
@@ -138,9 +132,8 @@ export default function Cart() {
                 return (
                   <CartItem
                     id={item.id}
-                    mutate={mutate}
-                    img={item.image}
-                    name={item.name}
+                    img={item.img}
+                    name={item.title}
                     totalPrice={item.total_price}
                     count={item.count}
                     type={item.type}
@@ -151,7 +144,7 @@ export default function Cart() {
             </div>
             {/*  */}
             <button
-              disabled={!data}
+              disabled={data.length < 1}
               className="w-full disabled:bg-opacity-20 disabled:cursor-not-allowed disabled:text-slate-300 flex items-center justify-center gap-x-1 text-center text-base font-semibold text-slate-400 rounded-md bg-slate-200 py-2 hover:text-slate-200 hover:bg-slate-400 transition-colors"
               onClick={() => {
                 setIsopen(false);

@@ -2,6 +2,7 @@
   "name": "shop_spa",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://crm.sitniks.com",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.14",
     "axios": "^1.7.2",
     "classnames": "^2.5.1",
     "framer-motion": "^11.3.17",
@@ -21,7 +23,8 @@
     "react-player": "^2.16.0",
     "swiper": "^11.1.6",
     "swr": "^2.2.5",
-    "usehooks-ts": "^3.1.0"
+    "usehooks-ts": "^3.1.0",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",

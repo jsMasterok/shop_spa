@@ -3,22 +3,22 @@
 import Link from "next/link";
 import ImageSlider from "../components/ImageSlider";
 import PriceBlock from "../components/PriceBlock";
-import DescriptionBlock from "../components/DescriptionBlock";
-
 import useSWR from "swr";
-import { fetcher } from "@/app/utils/apiClient";
-import { API, BW_API } from "@/app/utils/constants";
-import ProductPageSkeleton from "@/app/components/skeletons/ProductPageSkeleton";
 import Preloader from "@/app/components/Preloader";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { CRM_BASE_ROUTE } from "@/app/utils/constants";
+import fetcherSWR from "@/app/utils/fetcherSWR";
 
 export default function ProductPage() {
   const path = usePathname();
+  const router = useRouter();
+  const id = path.split("products/")[1];
   const { data, isLoading, error, mutate } = useSWR(
-    `${BW_API}/wishes/${path.split("products/")[1]}`,
-    fetcher
+    `${CRM_BASE_ROUTE}/products/${id}`,
+    fetcherSWR
   );
-  if (isLoading || !data) return;
+  if (isLoading) return <Preloader />;
+  if (!data) router.push("/");
   return (
     <section className="w-full min-h-screen flex flex-col gap-y-2 px-2 pb-8 pt-28 lg:px-8 max-w-6xl mx-auto">
       <Link
@@ -41,29 +41,23 @@ export default function ProductPage() {
         </svg>
         Назад
       </Link>
-      <ImageSlider image={data.image} />
-      <h2 className="text-2xl font-semibold text-slate-600">{data.name}</h2>
+      <ImageSlider images={data.attachments} />
       <span className="text-base font-semibold text-slate-400">
-        {data.type}
+        {data.category.title}
       </span>
+      <h2 className="text-2xl font-semibold text-slate-600">{data.title}</h2>
       <PriceBlock
         id={data.id}
-        price={data.price}
-        totalCount={data.total_count}
-        img={data.image}
-        type={data.type}
-        name={data.name}
+        price={data.variations[0].price}
+        totalCount={data.variations[0].availableQuantity}
+        img={data.attachments[0].url}
+        type={data.category.title}
+        name={data.title}
       />
-      <DescriptionBlock
-        compound={data.compound}
-        method={data.method}
-        power={data.power}
-        result={data.result}
+      <p
+        className="text-pretty text-slate-400 text-base font-semibold"
+        dangerouslySetInnerHTML={{ __html: data.description }}
       />
-      {/*  Запобіжні заходи: тільки для
-          зовнішнього застосування. Уникати потрапляння в очі. Зберігати окремо
-          від харчових продуктів в недоступному для дітей та домашніх тварин
-          місці. */}
       <div className="flex flex-col gap-y-2 sm:gap-y-3 my-5 text-sm text-slate-400">
         <span className="flex flex-col sm:inline-flex items-start sm:items-center gap-x-2">
           Виробник:<b>ТМ 73 best wishes</b>
@@ -109,13 +103,13 @@ export default function ProductPage() {
         <span className="flex flex-col sm:inline-flex items-start sm:items-center gap-x-2">
           Умови зберігання:
           <b>
-            Уберігати при температурі не нижче 5 °С і не вище 25 °С, при
+            Зберігати при температурі не нижче 5 °С і не вище 25 °С, при
             відсутності безпосереднього впливу сонячного світла
           </b>
         </span>{" "}
         <span className="flex flex-col sm:inline-flex items-start sm:items-center gap-x-2">
           Запобіжні заходи:
-          <b className="text-center">
+          <b className=" sm:text-center">
             тільки для зовнішнього застосування. Уникати потрапляння в очі.
             Зберігати окремо від харчових продуктів в недоступному для дітей та
             домашніх тварин місці.

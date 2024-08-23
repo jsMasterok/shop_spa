@@ -1,30 +1,27 @@
 "use client";
-import { addToCart } from "@/app/utils/apiClient";
-import { API } from "@/app/utils/constants";
+import { useCart } from "@/app/utils/store";
 import Image from "next/image";
-import { useSessionStorage } from "usehooks-ts";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { mutate } from "swr";
 import toast from "react-hot-toast";
 
 export default function ProductCard({
+  id,
   title,
   price,
   type,
   img,
-  id,
 }: {
+  id: string;
   title: string;
   price: any;
   type: string;
   img: string;
-  id: string;
 }) {
+  const addToCart = useCart((state: any) => state.addToCart);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
-  console.log(id);
 
   return (
     <div
@@ -32,12 +29,13 @@ export default function ProductCard({
       onClick={() => router.push(`/products/${id}`)}
     >
       <div className="flex flex-col w-full gap-y-2 justify-between">
-        <div className="w-full flex h-48 rounded-md relative">
+        <div className="w-full flex h-56 rounded-md relative">
           <Image
             src={img}
             layout="fill"
-            objectFit="contain"
+            objectFit="cover"
             alt="Image"
+            quality={100}
             className="rounded-md"
           />
         </div>
@@ -50,10 +48,11 @@ export default function ProductCard({
               e.preventDefault();
               e.stopPropagation();
               setIsLoading(true);
-              addToCart(id, title, type, 1, img, parseInt(price)).then(() => {
-                mutate("http://localhost:4444/cart");
+              addToCart(id, title, price, img, 1, type);
+              setTimeout(() => {
                 setIsLoading(false);
-              });
+                toast.success("Товар додано до кошика");
+              }, 300);
             }}
             type="button"
             className="w-full flex items-center justify-center gap-x-1 text-center text-xs font-semibold text-slate-400 rounded-md bg-slate-200 py-1 hover:text-slate-200 hover:bg-slate-400 transition-colors"

@@ -1,9 +1,9 @@
 "use client";
 
-import { addToCart } from "@/app/utils/apiClient";
+import { useCart } from "@/app/utils/store";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { mutate } from "swr";
-import { API } from "@/app/utils/constants";
 
 export default function PriceBlock({
   id,
@@ -20,6 +20,7 @@ export default function PriceBlock({
   img: string;
   type: string;
 }) {
+  const addToCart = useCart((state: any) => state.addToCart);
   const [count, setCount] = useState<number>(1);
   const [totalPrice, setTotalPrice] = useState<any>(price);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -93,11 +94,11 @@ export default function PriceBlock({
             e.preventDefault();
             e.stopPropagation();
             setIsLoading(true);
-            addToCart(id, name, type, count, img, totalPrice)
-              .then(() => mutate(`${API}/cart`))
-              .finally(() => {
-                setIsLoading(false);
-              });
+            addToCart(id, name, totalPrice, img, count, type);
+            setTimeout(() => {
+              setIsLoading(false);
+              toast.success("Товар додано до кошика");
+            }, 300);
           }}
           type="button"
           className="w-full flex items-center justify-center gap-x-1 text-center text-base font-semibold text-slate-400 rounded-md bg-slate-200 py-2 hover:text-slate-200 hover:bg-slate-400 transition-colors"

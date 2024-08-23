@@ -1,24 +1,11 @@
 import axios from "axios";
-import { API, BW_API } from "./constants";
 
-export const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+const instance = axios.create({
+  baseURL: "https://crm.sitniks.com/open-api",
+  headers: {
+    Authorization: `Bearer DGoEUHrr1gCqM9j6syfSJP4yhYTOjlL3PZFSi16USXq`,
+    "Content-Type": "application/json",
+  },
+});
 
-export const addToCart = (
-  name: string,
-  type: string,
-  count: number,
-  image: string,
-  total_price: number
-) => {
-  return axios.post(`${BW_API}/cart`, {
-    name,
-    type,
-    count,
-    image,
-    total_price,
-  });
-};
-
-export const deleteCartItem = (id: any) => {
-  return axios.delete(`${API}/cart/${id}`);
-};
+export default instance;

@@ -13,6 +13,7 @@ const config: Config = {
     require("@tailwindcss/forms")({
       strategy: "base", // only generate global styles
     }),
+    require("@tailwindcss/typography"),
   ],
 };
 export default config;

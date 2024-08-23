@@ -1,7 +1,5 @@
 "use client";
-import useSWR from "swr";
-import { API, cities } from "../utils/constants";
-import { deleteCartItem, fetcher } from "../utils/apiClient";
+import { cities } from "../utils/constants";
 import CartItem from "../components/CartItem";
 import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
@@ -10,14 +8,12 @@ import classNames from "classnames";
 import toast from "react-hot-toast";
 import Preloader from "../components/Preloader";
 import { motion } from "framer-motion";
+import { useCart } from "../utils/store";
+import { validatePhoneNumber } from "../utils/valifationPatterns";
 
 export default function Page() {
-  const {
-    data,
-    mutate,
-    isLoading: loadData,
-    error,
-  } = useSWR(`${API}/cart`, fetcher);
+  const data = useCart((state: any) => state.items);
+  const clearCart = useCart((state: any) => state.removeAll);
 
   const {
     control,
@@ -50,17 +46,12 @@ export default function Page() {
     0
   );
 
-  const setPayment = async () => {
-    setIsLoading(true);
-    await data.map((item: any) => {
-      return deleteCartItem(item.id);
-    });
-    await toast.success("Дякуемо за замовлення");
-    setIsLoading(false);
-    router.push("/finish");
+  const setPayment = () => {
+    console.log();
+    clearCart();
   };
 
-  if (loadData) return <Preloader />;
+  if (data.length < 1) return router.push("/");
 
   return (
     <section className="w-full min-h-screen lg:min-h-fit flex flex-col gap-y-2 px-2 pb-8 pt-28 max-w-6xl lg:px-8 mx-auto">
@@ -72,9 +63,8 @@ export default function Page() {
           return (
             <CartItem
               id={item.id}
-              mutate={mutate}
-              img={item.image}
-              name={item.name}
+              img={item.img}
+              name={item.title}
               totalPrice={item.total_price}
               count={item.count}
               type={item.type}

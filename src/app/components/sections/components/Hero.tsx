@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import Preloader from "../../Preloader";
+import ReactPlayer from "react-player";
 export default function Hero() {
   const [ready, setReady] = useState<boolean>(false);
+
   useEffect(() => {});
   const textAnim = {
     hidden: {

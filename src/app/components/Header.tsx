@@ -8,11 +8,7 @@ import { motion } from "framer-motion";
 export default function Header() {
   const links = [
     {
-      name: "Догляд",
-      path: "/products",
-    },
-    {
-      name: "Макіяж",
+      name: "Каталог",
       path: "/products",
     },
     {
@@ -37,7 +33,7 @@ export default function Header() {
             <motion.button
               type="button"
               whileHover={{ scale: 1.2 }}
-              className="hover:bg-slate-100 rounded-md p-1 transition-colors"
+              className="hover:bg-slate-100 rounded-md p-1 transition-colors invisible"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

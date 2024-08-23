@@ -1,0 +1,202 @@
+{
+    "data": [
+        {
+            "id": 1149412,
+            "status": {
+                "id": 14676,
+                "code": "new",
+                "title": "Новий",
+                "color": "#f75757",
+                "ordering": 0,
+                "isActiveForUser": true
+            },
+            "client": {
+                "id": 1142779,
+                "fullname": "Анна Гаврілова",
+                "phone": "+380505539395",
+                "email": "jwrgj@mail.com"
+            },
+            "responsibleId": 5902,
+            "responsible": {
+                "id": 5902,
+                "user": {
+                    "email": "pavel.glazunov.1997@gmail.com",
+                    "fullname": "павел",
+                    "phone": "+380500587867",
+                    "avatar": null
+                }
+            },
+            "delivery": null,
+            "utm": null,
+            "salesChannel": {
+                "id": 4167,
+                "title": "Продавці"
+            },
+            "discountPercent": 0,
+            "discountAmount": 0,
+            "clientComment": null,
+            "managerComment": "wqeqwe",
+            "totalPrice": 1940,
+            "totalPriceDiscount": 1940,
+            "cashOnDelivery": 1940,
+            "orderNumber": 2,
+            "createdAt": "2024-08-23T00:39:43.202Z",
+            "source": "sitniks-crm",
+            "externalId": null,
+            "products": [
+                {
+                    "id": 1846770,
+                    "offerPrice": 753,
+                    "offerPriceDiscount": 753,
+                    "isUpsale": false,
+                    "discountPercent": 0,
+                    "discountAmount": 0,
+                    "price": 753,
+                    "costPrice": 0,
+                    "quantity": 1,
+                    "title": "NiaTone Refresh  Очищуючий і зволожуючий тонік для обличчя  150 мл  (sku-null)",
+                    "productVariation": {
+                        "id": 1486572,
+                        "createdAt": "2024-08-15T17:34:01.194Z",
+                        "updatedAt": "2024-08-18T07:54:01.868Z",
+                        "companyId": 2186,
+                        "productId": 3410759,
+                        "sku": null,
+                        "isActive": true,
+                        "barcode": null,
+                        "price": 753,
+                        "costPrice": 0,
+                        "weight": 1000,
+                        "volumeWeight": 0.00025,
+                        "height": 100,
+                        "width": 100,
+                        "depth": 100,
+                        "title": "",
+                        "systemTitle": "NiaTone Refresh  Очищуючий і зволожуючий тонік для обличчя  150 мл ",
+                        "properties": [],
+                        "attachments": [
+                            {
+                                "id": 1,
+                                "url": "https://d1mw0dsp1qe5h5.cloudfront.net/cmp-2186/products/2024-08-15/5a41bc/4b8167-1723743161216.jpeg"
+                            }
+                        ],
+                        "auxiliaryInfo": {},
+                        "product": {
+                            "id": 3410759,
+                            "createdAt": "2024-08-15T17:34:01.194Z",
+                            "updatedAt": "2024-08-15T17:34:01.194Z",
+                            "companyId": 2186,
+                            "categoryId": 37559,
+                            "title": "NiaTone Refresh  Очищуючий і зволожуючий тонік для обличчя  150 мл",
+                            "titleLang": {
+                                "ru": "",
+                                "uk": "",
+                                "en": ""
+                            },
+                            "description": "Тонік для обличчя NiaTone Refresh поєднує в собі найкращі натуральні інгредієнти та інноваційні технології, щоб забезпечити вашій шкірі свіжість, зволоження та відновлення. Підходить для всіх типів шкіри, особливо корисний для комбінованої та жирної шкіри.\n\n\nАктивні компоненти:\n ◦ Ніацинамід (Niacinamide) - потужний антиоксидант, який допомагає зменшити почервоніння, вирівнює тон шкіри, зменшує прояви пігментації та запобігає появі зморшок.\n ◦ Пантенол (Panthenol) - має заспокійливі та загоюючі властивості, допомагає зменшити подразнення та запалення на шкірі.\n ◦ Екстракт гамамелісу (Hamamelis Virginiana Leaf Extract) - має протизапальні та антиоксидантні властивості, допомагає зменшити подразнення та почервоніння шкіри.\n ◦ Вітамін Е (Tocopheryl Acetate) - потужний антиоксидант, який захищає шкіру від шкідливого впливу вільних радикалів та допомагає запобігти передчасному старінню.\n ◦ Аргінін (Arginine) - амінокислота, яка сприяє відновленню та зміцненню бар'єрних функцій шкіри, покращує її еластичність та пр",
+                            "descriptionLang": {
+                                "ru": "",
+                                "uk": "",
+                                "en": ""
+                            },
+                            "auxiliaryInfo": {}
+                        },
+                        "uiTitle": "NiaTone Refresh  Очищуючий і зволожуючий тонік для обличчя  150 мл",
+                        "costPriceRateDifference": 0
+                    },
+                    "warehouse": {
+                        "id": 2771,
+                        "title": "Основний",
+                        "isDefault": true,
+                        "isActive": true
+                    }
+                },
+                {
+                    "id": 1846771,
+                    "offerPrice": 1187,
+                    "offerPriceDiscount": 1187,
+                    "isUpsale": false,
+                    "discountPercent": 0,
+                    "discountAmount": 0,
+                    "price": 1187,
+                    "costPrice": 0,
+                    "quantity": 1,
+                    "title": "Radiance Pads Пілінг-диски для обличчя 50шт  (sku-null)",
+                    "productVariation": {
+                        "id": 1486564,
+                        "createdAt": "2024-08-15T17:20:38.055Z",
+                        "updatedAt": "2024-08-18T07:54:05.767Z",
+                        "companyId": 2186,
+                        "productId": 3410751,
+                        "sku": null,
+                        "isActive": true,
+                        "barcode": null,
+                        "price": 1187,
+                        "costPrice": 0,
+                        "weight": 1000,
+                        "volumeWeight": 0.00025,
+                        "height": 100,
+                        "width": 100,
+                        "depth": 100,
+                        "title": "",
+                        "systemTitle": "Radiance Pads Пілінг-диски для обличчя 50шт ",
+                        "properties": [],
+                        "attachments": [
+                            {
+                                "id": 1,
+                                "url": "https://d1mw0dsp1qe5h5.cloudfront.net/cmp-2186/products/2024-08-15/7af3b0/f3b741-1723742375485.jpeg"
+                            }
+                        ],
+                        "auxiliaryInfo": {},
+                        "product": {
+                            "id": 3410751,
+                            "createdAt": "2024-08-15T17:20:38.055Z",
+                            "updatedAt": "2024-08-15T17:20:38.055Z",
+                            "companyId": 2186,
+                            "categoryId": 37559,
+                            "title": "Radiance Pads Пілінг-диски для обличчя 50шт",
+                            "titleLang": {
+                                "ru": "",
+                                "uk": "",
+                                "en": ""
+                            },
+                            "description": "Пілінг-диски для обличчя Radiance Pads забезпечують глибоке очищення та оновлення шкіри, завдяки поєднанню потужних кислот і зволожуючих інгредієнтів. Ці пілінг-диски легко інтегруються в ваш щоденний догляд, даруючи шкірі свіжість, гладкість і сяйво.\n\nАктивні компоненти:\n      • Молочна кислота (Lactic Acid): М’яко відлущує, сприяючи оновленню клітин та зволоженню шкіри.\n • Гліколева кислота (Glycolic Acid): Глибоко проникає в шкіру, покращує текстуру та вирівнює тон.\n • Лимонна кислота (Citric Acid): Вирівнює тон шкіри та забезпечує антиоксидантний захист.\n • Глюконолактон (Gluconolactone): Забезпечує делікатне відлущування та зволоження.\n • Гліцерин (Glycerin): Інтенсивно зволожує, утримуючи вологу в шкірі.\n • Пантенол (Panthenol): Заспокоює та відновлює шкіру.\n\nДія серветок:\n\n • Ефективне відлущування: Поєднання молочної, гліколевої та лимонної кислот забезпечує глибоке, але делікатне очищення та відлущування.\n • Зволоження та заспокоєння: Гліцерин та пантенол допомагають утримувати вологу, заспокоюючи шк",
+                            "descriptionLang": {
+                                "ru": "",
+                                "uk": "",
+                                "en": ""
+                            },
+                            "auxiliaryInfo": {}
+                        },
+                        "uiTitle": "Radiance Pads Пілінг-диски для обличчя 50шт",
+                        "costPriceRateDifference": 0
+                    },
+                    "warehouse": {
+                        "id": 2771,
+                        "title": "Основний",
+                        "isDefault": true,
+                        "isActive": true
+                    }
+                }
+            ],
+            "completedAt": "2024-08-30T21:00:00.000Z",
+            "payment": {
+                "id": 931791,
+                "settlementAccount": {
+                    "id": 4179,
+                    "title": "Моно",
+                    "integrationId": 765,
+                    "integrationName": "MONOBANK",
+                    "type": "payment_system",
+                    "balance": 0,
+                    "originalBalance": 0
+                },
+                "amount": 0,
+                "status": null,
+                "description": null,
+                "transactionId": null
+            }
+        }
+    ],
+    "count": 1
+}

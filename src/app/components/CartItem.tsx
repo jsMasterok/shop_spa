@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { deleteCartItem } from "../utils/apiClient";
 import toast from "react-hot-toast";
+import { useCart } from "../utils/store";
 
 export default function CartItem({
-  mutate,
   id,
   img,
   name,
@@ -14,8 +13,7 @@ export default function CartItem({
   count,
   totalPrice,
 }: {
-  mutate: () => void;
-  id: number;
+  id: Number;
   img: string;
   name: string;
   type: string;
@@ -23,14 +21,22 @@ export default function CartItem({
   totalPrice: any;
 }) {
   const [deleting, setDeleting] = useState<boolean>(false);
-
+  const removeFromCart = useCart((state: any) => state.removeFromCart);
   return (
-    <div className="flex items-center justify-between gap-x-2 p-1 border-2 border-slate-100 rounded-md">
-      <div className="w-14 h-14 relative">
-        <Image src={img} layout="fill" objectFit="cover" alt="Image" />
+    <div className="flex items-center justify-between gap-x-2 p-2 border-2 border-slate-100 rounded-md">
+      <div className="w-14 h-14 relative hidden sm:block">
+        <Image
+          src={img}
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+          alt="Image"
+        />
       </div>
       <div className="flex items-start flex-col gap-y-1">
-        <span className="text-xs font-semibold text-slate-600">{name}</span>
+        <span className="text-xs truncate font-semibold max-w-36 sm:max-w-full text-nowrap text-slate-600">
+          {name}
+        </span>
         <span className="text-xs font-semibold text-slate-400">{type}</span>
       </div>
       <div className="flex items-center flex-col gap-y-1">
@@ -46,12 +52,11 @@ export default function CartItem({
       <button
         onClick={() => {
           setDeleting(true);
-          deleteCartItem(id)
-            .then(() => mutate())
-            .finally(() => {
-              setDeleting(false);
-              toast.success("Товар видалено");
-            });
+          setTimeout(() => {
+            setDeleting(false);
+            toast.success("Товар видалено із кошика");
+            removeFromCart(id);
+          }, 300);
         }}
         className="w-fit h-fit p-2 bg-red-500 rounded-md hover:bg-red-700 transition-colors"
       >

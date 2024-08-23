@@ -3,18 +3,13 @@
 import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import useSWR from "swr";
-import { API, BW_API } from "../utils/constants";
-import { fetcher } from "../utils/apiClient";
-import RecomendationSkeleton from "../components/skeletons/RecomendationSkeleton";
 import Preloader from "../components/Preloader";
 import { motion } from "framer-motion";
+import { CRM_BASE_ROUTE } from "../utils/constants";
+import { getWishes } from "../utils/api";
 
 export default function ProductsTemplate() {
-  const { data, mutate, isLoading, error } = useSWR(
-    `${BW_API}/wishes`,
-    fetcher
-  );
-
+  const { data, isLoading } = useSWR(`${CRM_BASE_ROUTE}/products`, getWishes);
   const cardAnim = {
     hidden: {
       opacity: 0,
@@ -74,7 +69,7 @@ export default function ProductsTemplate() {
         </svg>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 my-2 w-full h-full">
-        {data?.wishes?.map((product: any, index) => {
+        {data?.map((product: any, index: any) => {
           return (
             <motion.div
               whileHover={{ scale: 1.04 }}
@@ -84,12 +79,12 @@ export default function ProductsTemplate() {
               className="cursor-pointer"
             >
               <ProductCard
-                key={product._id}
-                id={product._id}
-                title={product.name}
-                price={product.price}
-                type={product.type}
-                img={product.image}
+                key={product.id}
+                id={product.id}
+                title={product.title}
+                price={product.variations[0].price}
+                type={product.category.title}
+                img={product.attachments[0].url}
               />
             </motion.div>
           );

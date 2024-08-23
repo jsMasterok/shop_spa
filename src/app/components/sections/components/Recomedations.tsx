@@ -2,17 +2,18 @@
 import Link from "next/link";
 import ProductCard from "../../../products/components/ProductCard";
 import useSWR from "swr";
-import { API, BW_API } from "@/app/utils/constants";
-import { fetcher } from "@/app/utils/apiClient";
 import { motion } from "framer-motion";
 import RecomendationSkeleton from "../../skeletons/RecomendationSkeleton";
 import { useMediaQuery } from "usehooks-ts";
 import Preloader from "../../Preloader";
+import { getWishes } from "@/app/utils/api";
+import { CRM_BASE_ROUTE } from "@/app/utils/constants";
+import { json } from "stream/consumers";
 
 export default function Recomedations() {
   const { data, isLoading, error, mutate } = useSWR(
-    `${BW_API}/wishes`,
-    fetcher
+    `${CRM_BASE_ROUTE}/products`,
+    getWishes
   );
   const cardAnim = {
     hidden: {
@@ -27,7 +28,9 @@ export default function Recomedations() {
   const laptop = useMediaQuery("(min-width:1024px");
   const slice = laptop ? 6 : 4;
 
-  if (isLoading) return <Preloader />;
+  console.log(data);
+
+  if (isLoading || !data) return <Preloader />;
 
   return (
     <motion.section
@@ -63,7 +66,46 @@ export default function Recomedations() {
         </motion.div>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 w-full h-full">
-        {data?.wishes.slice(0, slice).map((item: any, index: number) => {
+        {data.slice(0, slice).map((item: any, index: number) => {
+          return (
+            <motion.div
+              whileHover={{ scale: 1.04 }}
+              variants={cardAnim}
+              custom={index + 1}
+              key={item.id}
+              className="cursor-pointer"
+            >
+              <ProductCard
+                id={item.id}
+                img={item.attachments[0].url}
+                price={item.variations[0].price}
+                title={item.title}
+                type={item.category.title}
+              />
+            </motion.div>
+          );
+        })}
+      </div>
+      {/* <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 w-full h-full">
+        {data?.slice(0, slice).map((item: any, index: number) => { */}
+      {/* <motion.div
+            whileHover={{ scale: 1.04 }}
+            variants={cardAnim}
+            custom={index + 1}
+            key={item._id}
+            className="cursor-pointer"
+          > */}
+      {/* test */}
+      {/* <ProductCard
+              id={item._id}
+              img={item.image}
+              price={item.price}
+              title={item.name}
+              type={item.type}
+            /> */}
+      {/* </motion.div>;
+        })} */}
+      {/* {data?.wishes.slice(0, slice).map((item: any, index: number) => {
           return (
             <motion.div
               whileHover={{ scale: 1.04 }}
@@ -81,8 +123,8 @@ export default function Recomedations() {
               />
             </motion.div>
           );
-        })}
-      </div>
+        })} */}
+      {/* </div> */}
     </motion.section>
   );
 }

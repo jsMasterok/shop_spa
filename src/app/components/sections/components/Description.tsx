@@ -31,7 +31,7 @@ export default function Description() {
       <motion.span
         variants={animation}
         custom={1.2}
-        className="text-sm font-semibold text-slate-400 text-center relative z-10 lg:w-1/2 lg:ml-auto top-8 lg:top-0 bg-white bg-opacity-30 lowercase"
+        className="text-sm font-semibold text-slate-400 text-center relative z-10 lg:w-1/2 lg:ml-auto bg-white bg-opacity-30 lowercase"
       >
         ПЕРСОНАЛЬНА РЕКОМЕНДАЦІЯ ВІДПОВІДНО ДО ВАШОГО ВІКУ, ТИПУ ШКІРИ ТА ЇЇ
         ОСОБЛИВОСТЕЙ, СИНЕРГІЯ ПРОДУКТІВ ТА РЕГУЛЯРНІСТЬ ЇХ ЗАСТОСУВАННЯ, У
@@ -40,7 +40,7 @@ export default function Description() {
       <motion.div
         variants={animation}
         custom={1.4}
-        className="relative w-full flex flex-1 -top-10 lg:top-0 z-0 lg:w-1/2 lg:h-44 lg:mr-auto"
+        className="relative w-full flex flex-1 z-0 lg:w-1/2 lg:h-44 lg:mr-auto"
       >
         <Image
           src={"/assets/desc_1.jpg"}

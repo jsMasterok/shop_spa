@@ -28,9 +28,7 @@ export default function Recomedations() {
   const laptop = useMediaQuery("(min-width:1024px");
   const slice = laptop ? 6 : 4;
 
-  console.log(data);
-
-  if (isLoading || !data) return <Preloader />;
+  if (isLoading) return <Preloader />;
 
   return (
     <motion.section

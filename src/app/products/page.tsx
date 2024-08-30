@@ -85,6 +85,8 @@ export default function ProductsTemplate() {
                 price={product.variations[0].price}
                 type={product.category.title}
                 img={product.attachments[0].url}
+                total_count={product.variations[0].availableQuantity}
+                variationsId={product.variations[0].id}
               />
             </motion.div>
           );

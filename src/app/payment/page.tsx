@@ -1,56 +1,128 @@
 "use client";
-import { cities } from "../utils/constants";
+import { cities, CRM_BASE_ROUTE } from "../utils/constants";
 import CartItem from "../components/CartItem";
 import { Controller, useForm } from "react-hook-form";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import classNames from "classnames";
 import toast from "react-hot-toast";
 import Preloader from "../components/Preloader";
 import { motion } from "framer-motion";
 import { useCart } from "../utils/store";
 import { validatePhoneNumber } from "../utils/valifationPatterns";
+import useSWR from "swr";
+import { createOrder, getSellers } from "../utils/api";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Page() {
+  const {
+    data: webID,
+    mutate,
+    isLoading,
+    error,
+  } = useSWR(`${CRM_BASE_ROUTE}/sales-chanel`, getSellers);
+  const [sendind, setSending] = useState(false);
+  const [globalErr, setGlobalErr] = useState(false);
   const data = useCart((state: any) => state.items);
   const clearCart = useCart((state: any) => state.removeAll);
+  const router = useRouter();
 
   const {
     control,
-    clearErrors,
     formState: { errors, isValid },
+    reset,
     watch,
     setValue,
+    getValues,
+    setError,
     handleSubmit,
   } = useForm({
-    mode: "onChange",
+    mode: "all",
     defaultValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      phone: "",
-      city: "",
-      post_number: "",
-      comment: "",
-      seller_id: "",
+      delivery: {
+        integrationDeliveryId: 1556,
+        type: "newpost",
+        city: "Kyiv",
+        department: "",
+        price: 0,
+        seatsAmount: 1,
+      },
+      products: [
+        {
+          productVariationId: 1486564,
+          isUpsale: false,
+          price: 0,
+          title: "",
+          quantity: 0,
+          warehouseId: 2771,
+        },
+      ],
+      statusId: 14676,
+      client: {
+        fullname: "",
+        phone: "",
+        email: "",
+      },
+      clientComment: "",
+      salesChannelId: 0,
+      salesName: "",
     },
   });
+  useEffect(() => {
+    if (data.length > 0) {
+      const products = data.map((item: any) => ({
+        productVariationId: item.variationsId,
+        isUpsale: false,
+        price: item.initial_price,
+        title: item.title,
+        quantity: item.quantity,
+        warehouseId: 2771,
+      }));
 
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const prices = data?.map((item: any) => {
-    return parseInt(item.total_price);
-  });
-  const sum = prices?.reduce(
-    (accumulator: number, currentValue: number) => accumulator + currentValue,
-    0
-  );
+      setValue("products", products);
+    }
+  }, [data, setValue]);
 
-  const setPayment = () => {
-    console.log();
-    clearCart();
+  console.log(isValid);
+
+  const validateTitle = (value: string) => {
+    const foundItem = webID.find((item: any) => item.title === value);
+
+    if (!foundItem) {
+      setError("salesName", {
+        type: "manual",
+        message: "Такого оператору не знайдено!",
+      });
+      return "Такого оператору не знайдено!";
+    }
+    const id = foundItem.id;
+    if (id) {
+      setValue("salesChannelId", id);
+    }
+    return true;
   };
 
+  const sendToCRM = () => {
+    setSending(true);
+    createOrder(watch())
+      .then(({ data }) => console.log(data))
+      .catch((e) => {
+        console.log(e);
+        if (e) {
+          setGlobalErr(true);
+        }
+        toast.error("Упс,щось трапилось спробуйте ще раз");
+      })
+      .finally(() => {
+        setSending(false);
+        toast.success("Замовлення успішно сформоване");
+        if (!globalErr) {
+          reset();
+          router.push("/finish");
+        }
+      });
+  };
+
+  if (isLoading) return <Preloader />;
   if (data.length < 1) return router.push("/");
 
   return (
@@ -58,16 +130,19 @@ export default function Page() {
       <h3 className="text-xl text-center font-semibold text-slate-600">
         Ваше замовлення
       </h3>
-      <div className="flex flex-col gap-y-2">
+      {/* <pre>{JSON.stringify(watch(), 0, 2)}</pre>
+      <pre>{JSON.stringify(webID, 0, 2)}</pre> */}
+      <div className="flex flex-col gap-y-2 lg:max-w-lg mx-auto w-full">
         {data?.map((item: any, i: number) => {
           return (
             <CartItem
               id={item.id}
               img={item.img}
               name={item.title}
-              totalPrice={item.total_price}
-              count={item.count}
+              price={item.price}
+              count={item.quantity}
               type={item.type}
+              total_count={item.total_count}
               key={i}
             />
           );
@@ -79,24 +154,22 @@ export default function Page() {
       <form
         onSubmit={(e) => e.preventDefault()}
         noValidate={true}
-        className="flex flex-col gap-y-3 lg:grid lg:grid-cols-2 lg:gap-x-3 lg:max-w-lg mx-auto"
+        className="w-full flex flex-col gap-y-2 lg:max-w-lg mx-auto"
       >
         <Controller
           control={control}
-          name="first_name"
-          rules={{ required: true, minLength: 3, maxLength: 20 }}
+          name="client.fullname"
+          rules={{ required: true, minLength: 6, maxLength: 50 }}
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
             <motion.input
               whileFocus={{ scale: 1.05 }}
-              className={classNames(
-                "w-full p-2 border border-slate-100 rounded-md placeholder:text-slate-400 text-base font-semibold text-slate-500 focus:outline-0 focus:ring-0 focus:border-slate-400",
-                {
-                  "border-red-500 focus:border-red-500 placeholder:text-red-500 text-red-500":
-                    invalid,
-                }
-              )}
+              className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                invalid
+                  ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
+                  : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
+              }`}
               type="text"
-              placeholder="Ім'я"
+              placeholder="ФІО"
               onChange={onChange}
               value={value}
             ></motion.input>
@@ -104,82 +177,84 @@ export default function Page() {
         />
         <Controller
           control={control}
-          name="last_name"
-          rules={{ required: true, minLength: 3, maxLength: 25 }}
+          name="client.email"
+          rules={{
+            required: true,
+            minLength: 5,
+            maxLength: 50,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+          }}
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
-            <motion.input
-              whileFocus={{ scale: 1.05 }}
-              className={classNames(
-                "w-full p-2 border border-slate-100 rounded-md placeholder:text-slate-400 text-base font-semibold text-slate-500 focus:outline-0 focus:ring-0 focus:border-slate-400",
-                {
-                  "border-red-500 focus:border-red-500 placeholder:text-red-500 text-red-500":
-                    invalid,
-                }
+            <div className="flex flex-col gap-y-1">
+              <motion.input
+                whileFocus={{ scale: 1.05 }}
+                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                  invalid
+                    ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
+                    : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
+                }`}
+                type="text"
+                placeholder="Email"
+                onChange={onChange}
+                value={value}
+              ></motion.input>
+              {invalid && (
+                <span className="text-xs text-red-500">
+                  Невірний формат телефону пошти
+                </span>
               )}
-              type="text"
-              placeholder="Прізвище"
-              onChange={onChange}
-              value={value}
-            ></motion.input>
+            </div>
           )}
         />
         <Controller
           control={control}
-          name="email"
-          rules={{ required: true, minLength: 5, maxLength: 25 }}
+          name="client.phone"
+          rules={{
+            required: true,
+            minLength: 13,
+            maxLength: 13,
+            pattern: {
+              value: /^\+380\d{9}$/, // Паттерн для украинского номера телефона
+              message:
+                "Невірний формат телефону,використовуйте: +380XXXXXXXXX.",
+            },
+          }}
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
-            <motion.input
-              whileFocus={{ scale: 1.05 }}
-              className={classNames(
-                "w-full p-2 border border-slate-100 rounded-md placeholder:text-slate-400 text-base font-semibold text-slate-500 focus:outline-0 focus:ring-0 focus:border-slate-400",
-                {
-                  "border-red-500 focus:border-red-500 placeholder:text-red-500 text-red-500":
-                    invalid,
-                }
+            <div className="flex flex-col gap-y-1">
+              <motion.input
+                whileFocus={{ scale: 1.05 }}
+                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                  invalid
+                    ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
+                    : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
+                }`}
+                type="text"
+                placeholder="Номер телефону (+380XXXXXXX )"
+                onChange={onChange}
+                value={value}
+                maxLength={13}
+              ></motion.input>
+              {invalid && (
+                <span className="text-xs text-red-500">
+                  Невірний формат телефону,використовуйте: +380XXXXXXXXX.
+                </span>
               )}
-              type="text"
-              placeholder="Email"
-              onChange={onChange}
-              value={value}
-            ></motion.input>
+            </div>
           )}
         />
         <Controller
           control={control}
-          name="phone"
-          rules={{ required: true, minLength: 13, maxLength: 13 }}
-          render={({ field: { onChange, value }, fieldState: { invalid } }) => (
-            <motion.input
-              whileFocus={{ scale: 1.05 }}
-              className={classNames(
-                "w-full p-2 border border-slate-100 rounded-md placeholder:text-slate-400 text-base font-semibold text-slate-500 focus:outline-0 focus:ring-0 focus:border-slate-400",
-                {
-                  "border-red-500 focus:border-red-500 placeholder:text-red-500 text-red-500":
-                    invalid,
-                }
-              )}
-              type="text"
-              placeholder="Номер телефону"
-              onChange={onChange}
-              value={value}
-            ></motion.input>
-          )}
-        />
-        <Controller
-          control={control}
-          name="city"
+          name="delivery.city"
           rules={{ required: true }}
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
             <select
               onChange={onChange}
               value={value}
-              className={classNames(
-                "w-full lg:col-span-2 p-2 border border-slate-100 rounded-md placeholder:text-slate-400 text-base font-semibold text-slate-500 focus:outline-0 focus:ring-0 focus:border-slate-400",
-                {
-                  "border-red-500 focus:border-red-500 placeholder:text-red-500 text-red-500":
-                    invalid,
-                }
-              )}
+              className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                invalid
+                  ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
+                  : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
+              }`}
             >
               {cities.map((city, index) => {
                 return <option key={index}>{city.city}</option>;
@@ -189,23 +264,33 @@ export default function Page() {
         />
         <Controller
           control={control}
-          name="post_number"
-          rules={{ required: true }}
+          name="delivery.department"
+          rules={{
+            required: true,
+            minLength: 2,
+            maxLength: 6,
+            pattern: /^\d+$/,
+          }}
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
-            <motion.input
-              whileFocus={{ scale: 1.05 }}
-              className={classNames(
-                "w-full lg:col-span-2 p-2 border border-slate-100 rounded-md placeholder:text-slate-400 text-base font-semibold text-slate-500 focus:outline-0 focus:ring-0 focus:border-slate-400",
-                {
-                  "border-red-500 focus:border-red-500 placeholder:text-red-500 text-red-500":
-                    invalid,
-                }
+            <div className="flex flex-col gap-y-1">
+              <motion.input
+                whileFocus={{ scale: 1.05 }}
+                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                  invalid
+                    ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
+                    : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
+                }`}
+                type="text"
+                placeholder="Відділеня або поштомат"
+                onChange={onChange}
+                value={value}
+              ></motion.input>
+              {invalid && (
+                <span className="text-xs text-red-500">
+                  Невірний формат номеру відділеня
+                </span>
               )}
-              type="text"
-              placeholder="Відділеня або поштомат"
-              onChange={onChange}
-              value={value}
-            ></motion.input>
+            </div>
           )}
         />
         <div className="inline-flex items-center gap-x-1 lg:col-span-2">
@@ -216,61 +301,68 @@ export default function Page() {
         </div>
         <Controller
           control={control}
-          name="seller_id"
-          rules={{ required: true }}
+          name="salesName"
+          rules={{ required: true, validate: validateTitle }}
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
             <div className="w-full lg:col-span-2 flex flex-col gap-y-1">
               <motion.input
                 whileFocus={{ scale: 1.05 }}
-                className={classNames(
-                  "w-full p-2 border border-slate-100 rounded-md placeholder:text-slate-400 text-base font-semibold text-slate-500 focus:outline-0 focus:ring-0 focus:border-slate-400",
-                  {
-                    "border-red-500 focus:border-red-500 placeholder:text-red-500 text-red-500":
-                      invalid,
-                  }
-                )}
+                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                  invalid
+                    ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
+                    : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
+                }`}
                 type="text"
                 placeholder="ID оператору"
                 onChange={onChange}
                 value={value}
               ></motion.input>
               <span className="text-xs font-semibold text-slate-400">
-                *Номер який вам вказав оператор instagram-чату
+                &lowast;ім&apos;я оператору instagram-чату,почніть вводити без
+                &quot;@&quot;
               </span>
+              {invalid && (
+                <span className="text-xs font-semibold text-red-500">
+                  <span className="mr-1">Такого оператору не знайдено</span>
+                  Якщо у вас немає оператору,напишіть нам у інтстаграм -
+                  <Link
+                    target="_blank"
+                    href={"https://instagram.com/bbestwisshes"}
+                    className="hover:underline underline mx-1"
+                  >
+                    @bbestwisshes
+                  </Link>
+                </span>
+              )}
             </div>
           )}
         />
         <Controller
           control={control}
-          name="comment"
+          name="clientComment"
           rules={{}}
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
             <motion.textarea
               whileFocus={{ scale: 1.05 }}
-              className={classNames(
-                "w-full lg:col-span-2 p-2 border border-slate-100 rounded-md placeholder:text-slate-400 text-base font-semibold text-slate-500 focus:outline-0 focus:ring-0 focus:border-slate-400",
-                {
-                  "border-red-500 focus:border-red-500 placeholder:text-red-500 text-red-500":
-                    invalid,
-                }
-              )}
+              className={`w-full col-span-2 p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                invalid
+                  ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
+                  : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
+              }`}
               placeholder="Коментар (не обов'язково)"
               onChange={onChange}
               value={value}
             ></motion.textarea>
           )}
         />
-
-        <h3 className="text-xl lg:col-span-2 text-center font-semibold text-slate-600 mt-4">
-          Перейти до сплати
-        </h3>
         <button
-          onClick={setPayment}
+          onClick={sendToCRM}
+          disabled={!isValid}
           type="button"
-          className="w-full disabled:cursor-not-allowed lg:col-span-2 flex items-center justify-center gap-x-1 text-center text-base font-semibold text-slate-400 rounded-md bg-slate-200 py-2 hover:text-slate-200 hover:bg-slate-400 transition-colors"
+          className="w-full mt-2 disabled:cursor-not-allowed lg:col-span-2 flex items-center justify-center gap-x-1 text-center text-base font-semibold text-slate-400 rounded-md bg-slate-200 py-2 hover:text-slate-200 hover:bg-slate-400 transition-colors disabled:bg-slate-500  disabled:bg-opacity-80"
         >
-          {sum} UAH
-          {isLoading ? (
+          Оформити замовлення
+          {sendind ? (
             <div className="w-fit h-fit animate-spin">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

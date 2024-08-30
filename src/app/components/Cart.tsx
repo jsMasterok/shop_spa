@@ -14,7 +14,7 @@ export default function Cart() {
 
   return (
     <>
-      <div className="relative z-30">
+      <div className="relative z-30 ">
         <motion.button
           whileHover={{ scale: 1.2 }}
           onClick={toggleOpen}
@@ -55,7 +55,7 @@ export default function Cart() {
               left: "-100%",
             }}
             className={classNames(
-              "fixed z-50 w-[90%] lg:w-1/2 xl:w-1/3 border-r-2 bg-white border-r-slate-100 top-0 left-0 h-screen flex-col flex gap-3 px-2 py-4"
+              "fixed z-50 w-[95%] lg:w-1/2 xl:w-1/3 border-r-2 bg-white border-r-slate-100 top-0 left-0 h-screen flex-col flex gap-3 px-2 py-4"
             )}
           >
             <button
@@ -131,13 +131,14 @@ export default function Cart() {
               {data?.map((item: any, i: number) => {
                 return (
                   <CartItem
+                    key={i}
                     id={item.id}
                     img={item.img}
                     name={item.title}
-                    totalPrice={item.total_price}
-                    count={item.count}
+                    price={item.price}
+                    count={item.quantity}
                     type={item.type}
-                    key={i}
+                    total_count={item.total_count}
                   />
                 );
               })}

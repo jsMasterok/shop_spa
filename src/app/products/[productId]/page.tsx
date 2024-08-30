@@ -8,6 +8,7 @@ import Preloader from "@/app/components/Preloader";
 import { usePathname, useRouter } from "next/navigation";
 import { CRM_BASE_ROUTE } from "@/app/utils/constants";
 import fetcherSWR from "@/app/utils/fetcherSWR";
+import AutoResizeTextarea from "@/app/components/AutoresizeTextArea";
 
 export default function ProductPage() {
   const path = usePathname();
@@ -21,6 +22,8 @@ export default function ProductPage() {
   if (!data) router.push("/");
   return (
     <section className="w-full min-h-screen flex flex-col gap-y-2 px-2 pb-8 pt-28 lg:px-8 max-w-6xl mx-auto">
+      {/* <pre>{JSON.stringify(data, 0, 2)}</pre> */}
+
       <Link
         href={"/"}
         className="inline-flex items-center gap-x-1 text-slate-400 font-semibold text-base"
@@ -45,20 +48,22 @@ export default function ProductPage() {
       <span className="text-base font-semibold text-slate-400">
         {data.category.title}
       </span>
-      <h2 className="text-2xl font-semibold text-slate-600">{data.title}</h2>
-      <PriceBlock
-        id={data.id}
-        price={data.variations[0].price}
-        totalCount={data.variations[0].availableQuantity}
-        img={data.attachments[0].url}
-        type={data.category.title}
-        name={data.title}
-      />
-      <p
-        className="text-pretty text-slate-400 text-base font-semibold"
-        dangerouslySetInnerHTML={{ __html: data.description }}
-      />
-      <div className="flex flex-col gap-y-2 sm:gap-y-3 my-5 text-sm text-slate-400">
+      <div className="flex flex-col gap-y-2 items-center justify-center md:flex-row gap-x-2">
+        <h2 className="text-2xl font-semibold w-full text-slate-600">
+          {data.title}
+        </h2>
+        <PriceBlock
+          id={data.id}
+          price={data.variations[0].price}
+          totalCount={data.variations[0].availableQuantity}
+          img={data.attachments[0].url}
+          type={data.category.title}
+          name={data.title}
+          variationsId={data.variations[0].id}
+        />
+      </div>
+      <AutoResizeTextarea value={data.description} />
+      <div className="flex flex-col gap-y-2 sm:gap-y-3 text-sm text-slate-400">
         <span className="flex flex-col sm:inline-flex items-start sm:items-center gap-x-2">
           Виробник:<b>ТМ 73 best wishes</b>
         </span>
@@ -116,7 +121,7 @@ export default function ProductPage() {
           </b>
         </span>{" "}
       </div>
-      <div className="flex flex-col gap-8 items-center lg:flex-row lg:gap-0 lg:justify-between mt-4 lg:mt-8">
+      <div className="flex flex-col gap-8 items-center lg:flex-row lg:gap-0 lg:justify-between my-4">
         <div className="flex flex-col items-center gap-y-1">
           <span className="text-lg font-semibold text-slate-500">
             Доставка товарів

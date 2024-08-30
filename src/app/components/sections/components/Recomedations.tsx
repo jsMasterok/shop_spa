@@ -79,6 +79,8 @@ export default function Recomedations() {
                 price={item.variations[0].price}
                 title={item.title}
                 type={item.category.title}
+                total_count={item.variations[0].availableQuantity}
+                variationsId={item.variations[0].id}
               />
             </motion.div>
           );

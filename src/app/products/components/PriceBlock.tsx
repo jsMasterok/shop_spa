@@ -3,7 +3,6 @@
 import { useCart } from "@/app/utils/store";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { mutate } from "swr";
 
 export default function PriceBlock({
   id,
@@ -12,6 +11,7 @@ export default function PriceBlock({
   name,
   img,
   type,
+  variationsId,
 }: {
   id: string;
   price: number;
@@ -19,25 +19,24 @@ export default function PriceBlock({
   name: string;
   img: string;
   type: string;
+  variationsId: number;
 }) {
   const addToCart = useCart((state: any) => state.addToCart);
+  const updCount = useCart((state: any) => state.updateItemCount);
+
   const [count, setCount] = useState<number>(1);
   const [totalPrice, setTotalPrice] = useState<any>(price);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 my-4">
-      <div className="flex items-center justify-between gap-x-2 border border-slate-100 rounded-md px-2">
+    <div className="flex w-full">
+      {/* <div className="hidden items-center justify-between gap-x-2 border border-slate-100 rounded-md px-2">
         <button
           onClick={() => {
-            if (count > 1) {
-              setCount(count - 1);
-              if (count === 1) {
-                setTotalPrice(price);
-              } else {
-                setTotalPrice(totalPrice - price);
-              }
+            if (count <= 1) {
+              return toast.error("Кількість товару не може бути менше 1");
             }
+            setCount(count - 1);
           }}
         >
           <svg
@@ -58,15 +57,11 @@ export default function PriceBlock({
           className="w-full border-0 p-2 focus:outline-0 focus:ring-0 focus:border-0 text-center text-sm font-semibold text-slate-600"
         />
         <button
-          onClick={() => {
-            if (count < totalCount) {
-              setCount(count + 1);
-              if (count === 1) {
-                setTotalPrice(price * 2);
-              } else {
-                setTotalPrice(price * count);
-              }
+          onClick={async () => {
+            if (count > totalCount) {
+              return toast.error("Товару більше немає на складі");
             }
+            setCount(count + 1);
           }}
         >
           <svg
@@ -84,17 +79,28 @@ export default function PriceBlock({
             />
           </svg>
         </button>
-      </div>
-      <div className="flex items-center justify-center text-base font-semibold text-slate-600">
-        {parseInt(totalPrice)} UAH
-      </div>
+      </div> */}
+      {/* <div className="flex items-center justify-center text-base font-semibold text-slate-600">
+        {count * price} UAH
+      </div> */}
       <div className="col-span-2 lg:col-span-1 w-full">
         <button
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
             e.stopPropagation();
             setIsLoading(true);
-            addToCart(id, name, totalPrice, img, count, type);
+            await addToCart(
+              id,
+              name,
+              price,
+              img,
+              count,
+              type,
+              totalCount,
+              price,
+              variationsId
+            );
+            updCount(id, count);
             setTimeout(() => {
               setIsLoading(false);
               toast.success("Товар додано до кошика");
@@ -103,7 +109,7 @@ export default function PriceBlock({
           type="button"
           className="w-full flex items-center justify-center gap-x-1 text-center text-base font-semibold text-slate-400 rounded-md bg-slate-200 py-2 hover:text-slate-200 hover:bg-slate-400 transition-colors"
         >
-          Додати в кошик{" "}
+          Додати в кошик - {price}.00 UAH
           {isLoading ? (
             <div className="w-fit h-fit animate-spin">
               <svg

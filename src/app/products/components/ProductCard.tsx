@@ -12,12 +12,16 @@ export default function ProductCard({
   price,
   type,
   img,
+  total_count,
+  variationsId,
 }: {
   id: string;
   title: string;
   price: any;
   type: string;
   img: string;
+  total_count: number;
+  variationsId: number;
 }) {
   const addToCart = useCart((state: any) => state.addToCart);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -48,7 +52,17 @@ export default function ProductCard({
               e.preventDefault();
               e.stopPropagation();
               setIsLoading(true);
-              addToCart(id, title, price, img, 1, type);
+              addToCart(
+                id,
+                title,
+                price,
+                img,
+                1,
+                type,
+                total_count,
+                price,
+                variationsId
+              );
               setTimeout(() => {
                 setIsLoading(false);
                 toast.success("Товар додано до кошика");

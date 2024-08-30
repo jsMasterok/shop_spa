@@ -4,6 +4,10 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap");
 
+.video-bg {
+  background-image: "/public/assets/hero_video.mp4";
+}
+
 .vollkorn-400 {
   font-family: "Vollkorn", serif;
   font-optical-sizing: auto;

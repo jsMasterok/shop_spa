@@ -38,9 +38,9 @@ export default function Hero() {
 
   return (
     <section className="w-full min-h-screen lg:min-h-screen flex flex-col justify-around gap-y-4 pb-8 pt-20 lg:pt-24 overflow-x-hidden max-w-6xl mx-auto ">
-      <div className="w-full h-full flex flex-1 border relative">
+      <div className="flex flex-1 video-bg relative">
         <Image
-          src={"/assets/placeholder.jpg"}
+          src={"/assets/hero_video.gif"}
           layout="fill"
           objectFit="cover"
           alt="Image"
@@ -48,20 +48,6 @@ export default function Hero() {
           className="rounded-md"
         />
       </div>
-      {/* <ReactPlayer
-        url={"/assets/hero_video.mov"}
-        width={"100%"}
-        height={"100%"}
-        playing={true}
-        loop={true}
-        muted={true}
-        onReady={() => setReady(true)}
-        controls={false}
-        playsinline={true}
-        style={{
-          borderRadius: "6px",
-        }}
-      /> */}
       <motion.div
         initial={"hidden"}
         whileInView={"visible"}

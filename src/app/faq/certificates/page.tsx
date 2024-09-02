@@ -22,23 +22,17 @@ export default function Certificates() {
             <h1 className='text-slate-500 font-semibold text-xl text-center'>
                 Сертифікати
             </h1>
-            <div className="grid w-full grid-cols-8 gap-2">
-                {images.map(src)}
-            </div>
-            {/* <div className="grid w-full grid-cols-8 gap-2">
-                {images.map((item, index) => {
+            <div className="grid w-full grid-cols-1 lg:grid-cols-8 gap-2">
+                {images.map((src, index) => {
                     return (
-                        <div key={index} className="w-full col-span-2 relative h-64 border-2  border-slate-400 rounded-md cursor-pointer">
-                            <Image          src={"/assets/finish_1.jpg"}
-          layout="fill"
-          objectFit="cover"
-          alt="Image"
-          className="rounded-md"
-          quality={100} />
+                        <div onClick={() => setOpen(true)} key={index} className="w-full col-span-2 relative h-64 border-2  border-slate-400 rounded-md cursor-pointer">
+                            <Image src={src.src} layout="fill"
+                                objectFit="cover" alt="Image" />
                         </div>
                     )
                 })}
-            </div> */}
+            </div>
+
             <Lightbox
                 open={open}
                 close={() => setOpen(false)}

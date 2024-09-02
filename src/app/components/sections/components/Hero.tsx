@@ -9,7 +9,7 @@ import Image from "next/image";
 export default function Hero() {
   const [ready, setReady] = useState<boolean>(false);
 
-  useEffect(() => {});
+  useEffect(() => { });
   const textAnim = {
     hidden: {
       x: "-100%",
@@ -40,7 +40,7 @@ export default function Hero() {
     <section className="w-full min-h-screen lg:min-h-screen flex flex-col justify-around gap-y-4 pb-8 pt-20 lg:pt-24 overflow-x-hidden max-w-6xl mx-auto ">
       <div className="flex flex-1 video-bg relative">
         <Image
-          src={"/assets/hero_video.gif"}
+          src={"/assets/bw_her0.jpg"}
           layout="fill"
           objectFit="cover"
           alt="Image"
@@ -73,7 +73,7 @@ export default function Hero() {
         >
           <Link
             className="border-slate-200 border rounded-full h-20 w-20 relative flex items-center justify-normal ml-auto hover:text-slate-500 hover:border-slate-500 transition-all hover:shadow-sm hover:shadow-slate-500"
-            href={"/products"}
+            href={"/about-us"}
           >
             <span className="inline-flex gap-x-1 text-slate-400 text-xs font-semibold items-center absolute -left-3">
               <svg
@@ -90,7 +90,7 @@ export default function Hero() {
                   d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
                 />
               </svg>
-              Перейти
+              Про нас
             </span>
           </Link>
         </motion.div>

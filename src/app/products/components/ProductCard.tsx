@@ -29,11 +29,11 @@ export default function ProductCard({
 
   return (
     <div
-      className="w-full h-full flex flex-1 shadow-md p-2 rounded-md hover:shadow-lg transition-shadow"
+      className="w-full h-full flex flex-1 shadow-md border border-slate-100 p-2 rounded-md hover:shadow-lg transition-shadow"
       onClick={() => router.push(`/products/${id}`)}
     >
       <div className="flex flex-col w-full gap-y-2 justify-between">
-        <div className="w-full flex h-56 rounded-md relative">
+        <div className="w-full flex h-72 rounded-md relative">
           <Image
             src={img}
             layout="fill"

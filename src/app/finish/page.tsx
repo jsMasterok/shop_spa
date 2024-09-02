@@ -146,15 +146,15 @@ export default function Finish() {
         <span className="text-base font-semibold text-slate-400">
           Залишити відгук в
         </span>
-        <button
+        <Link
+          href={"https://www.instagram.com/_best_wishes_73?igsh=MTI2ZDdwcjc1dXk4cg=="}
           onClick={() => {
             removeAll();
-            router.push("/");
           }}
           className="text-base font-semibold text-slate-600 underline uppercase"
         >
           Instagram
-        </button>
+        </Link>
       </div>
     </section>
   );

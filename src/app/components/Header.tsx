@@ -13,7 +13,7 @@ export default function Header() {
     },
     {
       name: "Про нас",
-      path: "/",
+      path: "/about-us",
     },
   ];
   return (

@@ -20,8 +20,8 @@ export default function Footer() {
       <span className="flex flex-col sm:inline-flex items-start sm:items-center gap-x-2">
         Instagram:
         <b>
-          <Link target="_blank" href={"https://instagram.com/bbestwisshes"}>
-            @bbestwisshes
+          <Link target="_blank" href={" https://www.instagram.com/_best_wishes_73?igsh=MTI2ZDdwcjc1dXk4cg=="}>
+            @_best_wishes_73
           </Link>
         </b>
       </span>
@@ -29,30 +29,36 @@ export default function Footer() {
         Адреса виробничих потужностей:
         <b>Україна, 02093, м. Київ, вул. Бориспільска, 9</b>
       </span>
-      <a
+      <Link
         className="text-xs font-semibold text-slate-400 hover:underline mt-4"
-        href="#"
+        href={"/faq/customer"}
       >
         Угода користувача
-      </a>
-      <a
+      </Link>
+      <Link
         className="text-xs font-semibold text-slate-400 hover:underline"
-        href="#"
+        href="/faq/policy"
       >
         Політика конфідеційності
-      </a>
-      <a
+      </Link>
+      <Link
         className="text-xs font-semibold text-slate-400 hover:underline"
-        href="#"
+        href="/faq/delivery"
       >
         Доставка та оплата
-      </a>
-      <a
+      </Link>
+      <Link
+        className="text-xs font-semibold text-slate-400 hover:underline"
+        href="/faq/certificates"
+      >
+        Сертифікація
+      </Link>
+      {/* <a
         className="text-xs font-semibold text-slate-400 hover:underline"
         href="#"
       >
         Публічна оферта
-      </a>
+      </a> */}
       <motion.div whileHover={{ scale: 1.1 }} className="w-fit my-4">
         <Link
           href={"/"}

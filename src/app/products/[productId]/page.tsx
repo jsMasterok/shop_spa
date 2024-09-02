@@ -84,8 +84,8 @@ export default function ProductPage() {
         <span className="flex flex-col sm:inline-flex items-start sm:items-center gap-x-2">
           Instagram:
           <b>
-            <Link href={"https://instagram.com/bbestwisshes"}>
-              @bbestwisshes
+            <Link href={"https://www.instagram.com/_best_wishes_73?igsh=MTI2ZDdwcjc1dXk4cg=="}>
+              @_best_wishes_73
             </Link>
           </b>
         </span>
@@ -135,15 +135,20 @@ export default function ProductPage() {
             Консультація професіоналів
           </span>
           <Link
-            href={"/"}
+            href={"https://www.instagram.com/_best_wishes_73?igsh=MTI2ZDdwcjc1dXk4cg=="}
             className="text-base underline font-semibold text-slate-400"
           >
-            Instagram
+            @_best_wishes_73
           </Link>
         </div>
-        <span className="text-lg font-semibold text-slate-500">
-          Тільки якісна косметика
-        </span>
+        <div className="flex flex-col items-center gap-y-1">
+          <span className="text-lg font-semibold text-slate-500">
+            Тільки якісна косметика
+          </span>
+          <span className="text-base font-semibold text-slate-400">
+            Ceramio
+          </span>
+        </div>
       </div>
     </section>
   );

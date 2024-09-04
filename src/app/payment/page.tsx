@@ -6,8 +6,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Preloader from "../components/Preloader";
 import { motion } from "framer-motion";
-import { useCart } from "../utils/store";
-import { validatePhoneNumber } from "../utils/valifationPatterns";
+import { useCart, useFinish } from "../utils/store";
 import useSWR from "swr";
 import { createOrder, getSellers } from "../utils/api";
 import Link from "next/link";
@@ -24,6 +23,9 @@ export default function Page() {
   const [globalErr, setGlobalErr] = useState(false);
   const data = useCart((state: any) => state.items);
   const clearCart = useCart((state: any) => state.removeAll);
+  const setStatus = useFinish((state: any) => state.setOrderId);
+  const orderId = useFinish((state: any) => state.order_id);
+
   const router = useRouter();
 
   const {
@@ -82,8 +84,6 @@ export default function Page() {
     }
   }, [data, setValue]);
 
-  console.log(isValid);
-
   const validateTitle = (value: string) => {
     const foundItem = webID.find((item: any) => item.title === value);
 
@@ -104,7 +104,10 @@ export default function Page() {
   const sendToCRM = () => {
     setSending(true);
     createOrder(watch())
-      .then(({ data }) => console.log(data))
+      .then(({ data }) => {
+        setStatus(data.id);
+        console.log(orderId);
+      })
       .catch(async (e) => {
         console.log(e);
         if (e) {

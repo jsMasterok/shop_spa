@@ -21,7 +21,7 @@ export default function PriceBlock({
   type: string;
   variationsId: number;
 }) {
-  const addToCart = useCart((state: any) => state.addToCart);
+  const Cart = useCart((state: any) => state.addToCart);
   const updCount = useCart((state: any) => state.updateItemCount);
 
   const [count, setCount] = useState<number>(1);

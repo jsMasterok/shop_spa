@@ -1,4 +1,5 @@
 import apiClient from "../utils/apiClient";
+import postApiClient from "../utils/postApiClient";
 
 export const getWishes = () => {
   return apiClient

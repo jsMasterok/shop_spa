@@ -76,5 +76,9 @@ export const useFinish = create((set, get) => ({
   order_id: "",
   loading: false,
   error: null,
-  setOrderId: (id: any) => set({ orderId: id }),
+  setOrderId: (id: any) => set({ order_id: id }),
+  resetOrderId: () =>
+    set(() => {
+      return { order_id: "" };
+    }),
 }));

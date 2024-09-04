@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Confetti from "react-confetti";
-import { useCart } from "../utils/store";
+import { useCart, useFinish } from "../utils/store";
 import { useRouter } from "next/navigation";
 import { useCopyToClipboard } from "usehooks-ts";
 import toast from "react-hot-toast";
@@ -16,6 +16,10 @@ export default function Finish() {
   const [copiedText, copy] = useCopyToClipboard();
 
   const totalPrice = data.reduce((sum: any, item: any) => sum + item.price, 0);
+  const orderId = useFinish((state: any) => state.order_id);
+  const resetId = useFinish((state: any) => state.resetOrderId);
+
+  console.log(orderId);
 
   const formattedPrice = new Intl.NumberFormat("uk-UA", {
     style: "currency",
@@ -55,7 +59,7 @@ export default function Finish() {
         <div className="h-fit w-full p-2 border border-slate-100 grid grid-cols-12 gap-y-3">
           <div className="col-span-12">
             <span className=" text-center w-full flex items-center justify-center mb-2 text-sm font-semibold text-slate-400 ">
-              Ваш чек
+              Ваш чек, замовлення №{orderId}
             </span>
           </div>
           <div className="col-span-6 text-xs font-semibold text-slate-400">
@@ -70,9 +74,12 @@ export default function Finish() {
           <div className="col-span-2 text-xs font-semibold text-slate-400">
             Сума
           </div>
-          {data.map((item: any) => {
+          {data.map((item: any, index: number) => {
             return (
-              <>
+              <div
+                className="w-full grid col-span-12 grid-cols-12 gap-y-3"
+                key={index}
+              >
                 <div className="col-span-6 text-xs font-semibold text-slate-400 border-b border-b-slate-500 border-dashed pb-1">
                   {item.title}
                 </div>
@@ -85,7 +92,7 @@ export default function Finish() {
                 <div className="col-span-2 text-xs font-semibold text-slate-400 border-b border-b-slate-500 border-dashed pb-1">
                   {item.price}
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
@@ -135,6 +142,11 @@ export default function Finish() {
           Після оплати ми автоматично отримаємо сповіщення у нашій системі,також
           буде автоматично створено ТТН,який ви отримаєте в СМС повідомленні
         </span>
+        <span className="text-start w-full flex items-center justify-center mb-2 text-sm font-semibold text-red-500 border border-red-500 p-2 rounded-md">
+          При оплаті через банківський додаток,обов&apos;язково вкажіть: <br />
+          {"(Оплата за товар,та номер замовлення,який вказаний у чеку)"} <br />
+          Після цього натисніть кнопку {"(Сплачено)"}
+        </span>
       </div>
       <Link
         className="w-full lg:max-w-lg mx-auto flex items-center justify-center gap-x-1 text-center text-base font-semibold text-slate-400 rounded-md bg-slate-200 py-2 hover:text-slate-200 hover:bg-slate-400 transition-colors"
@@ -146,15 +158,16 @@ export default function Finish() {
         <span className="text-base font-semibold text-slate-400">
           Залишити відгук в
         </span>
-        <Link
-          href={"https://www.instagram.com/_best_wishes_73?igsh=MTI2ZDdwcjc1dXk4cg=="}
+        <button
           onClick={() => {
             removeAll();
+            resetId();
+            router.push("/");
           }}
           className="text-base font-semibold text-slate-600 underline uppercase"
         >
           Instagram
-        </Link>
+        </button>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-export const CRM_BASE_ROUTE = "https://crm.sitniks.com/open-api";
+export const CRM_BASE_ROUTE = process.env.NEXT_APP_API_URL;
 
 export const cities = [
   {

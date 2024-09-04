@@ -26,6 +26,10 @@ export default function ProductCard({
   const addToCart = useCart((state: any) => state.addToCart);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
+  const formattedPrice = new Intl.NumberFormat("uk-UA", {
+    style: "currency",
+    currency: "UAH",
+  }).format(price);
 
   return (
     <div
@@ -46,7 +50,7 @@ export default function ProductCard({
         <div className="flex flex-col gap-y-1">
           <h4 className="text-sm text-slate-500 truncate ">{title}</h4>
           <span className="text-xs text-slate-400">{type}</span>
-          <span className="text-xs text-slate-400">{parseInt(price)} UAH</span>
+          <span className="text-xs text-slate-400">{formattedPrice}</span>
           <button
             onClick={(e) => {
               e.preventDefault();

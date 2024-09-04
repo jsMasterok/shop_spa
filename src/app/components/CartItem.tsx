@@ -27,6 +27,10 @@ export default function CartItem({
   const removeFromCart = useCart((state: any) => state.removeFromCart);
   const updCount = useCart((state: any) => state.updateItemCount);
   const [totalPrice, setTotalPrice] = useState(price);
+  const formattedPrice = new Intl.NumberFormat("uk-UA", {
+    style: "currency",
+    currency: "UAH",
+  }).format(price);
 
   return (
     <div className="grid grid-cols-12 p-2 border-2 border-slate-100 rounded-md gap-x-2">
@@ -116,7 +120,7 @@ export default function CartItem({
           <div className="flex items-center flex-col gap-y-1">
             <span className="text-xs font-semibold text-slate-600">Сумма</span>
             <span className="text-xs font-semibold text-slate-400">
-              {price}.00 UAH
+              {formattedPrice}
             </span>
           </div>
         </div>

@@ -38,6 +38,6 @@ export const getSellers = () => {
     });
 };
 
-export const createOrder = (orderData: {}) => {
+export const createOrder = (orderData: any) => {
   return apiClient.post("/orders", orderData);
 };

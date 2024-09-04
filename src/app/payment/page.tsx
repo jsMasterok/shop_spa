@@ -105,17 +105,18 @@ export default function Page() {
     setSending(true);
     createOrder(watch())
       .then(({ data }) => console.log(data))
-      .catch((e) => {
+      .catch(async (e) => {
         console.log(e);
         if (e) {
           setGlobalErr(true);
+          clearCart();
         }
         toast.error("Упс,щось трапилось спробуйте ще раз");
       })
       .finally(() => {
         setSending(false);
-        toast.success("Замовлення успішно сформоване");
         if (!globalErr) {
+          toast.success("Замовлення успішно сформоване");
           reset();
           router.push("/finish");
         }
@@ -163,10 +164,11 @@ export default function Page() {
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
             <motion.input
               whileFocus={{ scale: 1.05 }}
-              className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${invalid
+              className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                invalid
                   ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
                   : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
-                }`}
+              }`}
               type="text"
               placeholder="ФІО"
               onChange={onChange}
@@ -187,10 +189,11 @@ export default function Page() {
             <div className="flex flex-col gap-y-1">
               <motion.input
                 whileFocus={{ scale: 1.05 }}
-                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${invalid
+                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                  invalid
                     ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
                     : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
-                  }`}
+                }`}
                 type="text"
                 placeholder="Email"
                 onChange={onChange}
@@ -221,10 +224,11 @@ export default function Page() {
             <div className="flex flex-col gap-y-1">
               <motion.input
                 whileFocus={{ scale: 1.05 }}
-                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${invalid
+                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                  invalid
                     ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
                     : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
-                  }`}
+                }`}
                 type="text"
                 placeholder="Номер телефону (+380XXXXXXX )"
                 onChange={onChange}
@@ -247,10 +251,11 @@ export default function Page() {
             <select
               onChange={onChange}
               value={value}
-              className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${invalid
+              className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                invalid
                   ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
                   : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
-                }`}
+              }`}
             >
               {cities.map((city, index) => {
                 return <option key={index}>{city.city}</option>;
@@ -271,10 +276,11 @@ export default function Page() {
             <div className="flex flex-col gap-y-1">
               <motion.input
                 whileFocus={{ scale: 1.05 }}
-                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${invalid
+                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                  invalid
                     ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
                     : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
-                  }`}
+                }`}
                 type="text"
                 placeholder="Відділеня або поштомат"
                 onChange={onChange}
@@ -302,10 +308,11 @@ export default function Page() {
             <div className="w-full lg:col-span-2 flex flex-col gap-y-1">
               <motion.input
                 whileFocus={{ scale: 1.05 }}
-                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${invalid
+                className={`w-full p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                  invalid
                     ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
                     : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
-                  }`}
+                }`}
                 type="text"
                 placeholder="ID оператору"
                 onChange={onChange}
@@ -321,7 +328,9 @@ export default function Page() {
                   Якщо у вас немає оператору,напишіть нам у інтстаграм -
                   <Link
                     target="_blank"
-                    href={"https://www.instagram.com/_best_wishes_73?igsh=MTI2ZDdwcjc1dXk4cg=="}
+                    href={
+                      "https://www.instagram.com/_best_wishes_73?igsh=MTI2ZDdwcjc1dXk4cg=="
+                    }
                     className="hover:underline underline mx-1"
                   >
                     @_best_wishes_73
@@ -338,10 +347,11 @@ export default function Page() {
           render={({ field: { onChange, value }, fieldState: { invalid } }) => (
             <motion.textarea
               whileFocus={{ scale: 1.05 }}
-              className={`w-full col-span-2 p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${invalid
+              className={`w-full col-span-2 p-2 border rounded-md  text-base font-semibold focus:outline-0 focus:ring-0 ${
+                invalid
                   ? "border-red-500  focus:border-red-500 placeholder:text-red-500 text-red-500"
                   : "border-slate-100 text-slate-500 placeholder:text-slate-400 focus:border-slate-400"
-                }`}
+              }`}
               placeholder="Коментар (не обов'язково)"
               onChange={onChange}
               value={value}

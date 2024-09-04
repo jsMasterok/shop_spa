@@ -1,11 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://crm.sitniks.com/open-api",
-  headers: {
-    Authorization: `Bearer DGoEUHrr1gCqM9j6syfSJP4yhYTOjlL3PZFSi16USXq`,
-    "Content-Type": "application/json",
-  },
+  baseURL: process.env.NEXT_APP_API_URL,
 });
 
 export default instance;

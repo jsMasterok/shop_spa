@@ -1,4 +1,4 @@
-export const CRM_BASE_ROUTE = process.env.NEXT_APP_API_URL;
+export const CRM_BASE_ROUTE = "https://best-wishes-523394bb75d0.herokuapp.com";
 
 export const cities = [
   {

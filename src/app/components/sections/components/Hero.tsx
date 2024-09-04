@@ -9,7 +9,7 @@ import Image from "next/image";
 export default function Hero() {
   const [ready, setReady] = useState<boolean>(false);
 
-  useEffect(() => { });
+  useEffect(() => {});
   const textAnim = {
     hidden: {
       x: "-100%",
@@ -40,7 +40,7 @@ export default function Hero() {
     <section className="w-full min-h-screen lg:min-h-screen flex flex-col justify-around gap-y-4 pb-8 pt-20 lg:pt-24 overflow-x-hidden max-w-6xl mx-auto ">
       <div className="flex flex-1 video-bg relative">
         <Image
-          src={"/assets/bw_her0.jpg"}
+          src={"/assets/hero.jpg"}
           layout="fill"
           objectFit="cover"
           alt="Image"

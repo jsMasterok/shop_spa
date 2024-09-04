@@ -17,7 +17,7 @@ export default function Header() {
     },
   ];
   return (
-    <header className="w-full p-2  border-b border-slate-100 bg-white absolute top-0 left-0 right-0">
+    <header className="w-full p-2  border-b border-slate-100 bg-white absolute top-0 left-0 right-0 z-10">
       <div className="flex flex-col gap-y-4 max-w-6xl mx-auto lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-x-2">

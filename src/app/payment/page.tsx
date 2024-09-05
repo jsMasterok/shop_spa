@@ -134,8 +134,6 @@ export default function Page() {
       <h3 className="text-xl text-center font-semibold text-slate-600">
         Ваше замовлення
       </h3>
-      {/* <pre>{JSON.stringify(watch(), 0, 2)}</pre>
-      <pre>{JSON.stringify(webID, 0, 2)}</pre> */}
       <div className="flex flex-col gap-y-2 lg:max-w-lg mx-auto w-full">
         {data?.map((item: any, i: number) => {
           return (

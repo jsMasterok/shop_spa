@@ -23,6 +23,7 @@ export default function PriceBlock({
 }) {
   const Cart = useCart((state: any) => state.addToCart);
   const updCount = useCart((state: any) => state.updateItemCount);
+  const addToCart = useCart((state: any) => state.addToCart);
 
   const [count, setCount] = useState<number>(1);
   const [totalPrice, setTotalPrice] = useState<any>(price);

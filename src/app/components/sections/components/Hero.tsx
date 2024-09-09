@@ -37,8 +37,8 @@ export default function Hero() {
   };
 
   return (
-    <section className="w-full min-h-screen lg:min-h-screen flex flex-col justify-around gap-y-4 pb-8 pt-20 lg:pt-24 overflow-x-hidden max-w-6xl mx-auto ">
-      <div className="flex flex-1 video-bg relative">
+    <section className="w-full min-h-screen lg:min-h-screen flex flex-col justify-between gap-y-4 pb-8 pt-20 lg:pt-24 overflow-x-hidden max-w-6xl mx-auto ">
+      <div className="flex w-full flex-1 relative">
         <Image
           src={"/assets/hero.jpg"}
           layout="fill"
@@ -51,7 +51,7 @@ export default function Hero() {
       <motion.div
         initial={"hidden"}
         whileInView={"visible"}
-        className="flex flex-col  px-2 lg:px-8 lg:w-1/2 lg:ml-auto gap-y-2"
+        className="flex flex-col px-2 lg:px-8 lg:w-1/2 lg:ml-auto gap-y-2"
       >
         <motion.h1
           variants={textAnim}

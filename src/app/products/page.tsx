@@ -7,9 +7,11 @@ import Preloader from "../components/Preloader";
 import { motion } from "framer-motion";
 import { CRM_BASE_ROUTE } from "../utils/constants";
 import { getWishes } from "../utils/api";
+import { useState } from "react";
 
 export default function ProductsTemplate() {
   const { data, isLoading } = useSWR(`${CRM_BASE_ROUTE}/products`, getWishes);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const cardAnim = {
     hidden: {
       opacity: 0,
@@ -51,6 +53,8 @@ export default function ProductsTemplate() {
         <input
           type="text"
           placeholder="Пошук"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full rounded-md border-none focus:outline-none focus:ring-0 focus:border-none placeholder:text-slate-400 text-slate-500 font-semibold text-sm"
         />
         <svg
@@ -69,28 +73,32 @@ export default function ProductsTemplate() {
         </svg>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4 my-2 w-full h-full">
-        {data?.map((product: any, index: any) => {
-          return (
-            <motion.div
-              whileHover={{ scale: 1.04 }}
-              variants={cardAnim}
-              custom={index + 1}
-              key={product._id}
-              className="cursor-pointer"
-            >
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                title={product.title}
-                price={product.variations[0].price}
-                type={product.category.title}
-                img={product.attachments[0].url}
-                total_count={product.variations[0].availableQuantity}
-                variationsId={product.variations[0].id}
-              />
-            </motion.div>
-          );
-        })}
+        {data
+          ?.filter((product: any) =>
+            product.title.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((product: any, index: any) => {
+            return (
+              <motion.div
+                whileHover={{ scale: 1.04 }}
+                variants={cardAnim}
+                custom={index + 1}
+                key={product._id}
+                className="cursor-pointer"
+              >
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  title={product.title}
+                  price={product.variations[0].price}
+                  type={product.category.title}
+                  img={product.attachments[0].url}
+                  total_count={product.variations[0].availableQuantity}
+                  variationsId={product.variations[0].id}
+                />
+              </motion.div>
+            );
+          })}
       </div>
     </section>
   );

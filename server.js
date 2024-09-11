@@ -1,23 +1,21 @@
 const express = require("express");
-const next = require("next");
 const http = require("http");
+const { Server } = require("socket.io");
 
-const dev = process.env.NODE_ENV !== "production";
-const app = next({ dev });
-const handle = app.getRequestHandler();
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
-app.prepare().then(() => {
-  const server = express();
+const socketPath = "/var/www/ch1bf2ce25/.system/nodejs/bw73.com.ua/socket";
 
-  server.all("*", (req, res) => {
-    return handle(req, res);
-  });
+app.get(socketPath, (req, res) => {
+  res.send("Socket server is running");
+});
 
-  const SOCKET_PATH = "/var/www/ch1bf2ce25/.system/nodejs/bw73.com.ua/socket";
+io.on("connection", (socket) => {
+  console.log("A user connected");
+});
 
-  const httpServer = http.createServer(server);
-
-  httpServer.listen(SOCKET_PATH, () => {
-    console.log(`Server is running on socket: ${SOCKET_PATH}`);
-  });
+server.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });

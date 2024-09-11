@@ -13,21 +13,11 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
+  const SOCKET_PATH = "/var/www/ch1bf2ce25/.system/nodejs/bw73.com.ua/socket";
+
   const httpServer = http.createServer(server);
 
-  httpServer.listen(process.env.PORT, () => {
-    console.log(`Server is running`);
+  httpServer.listen(SOCKET_PATH, () => {
+    console.log(`Server is running on socket: ${SOCKET_PATH}`);
   });
 });
-
-// const HTTP = require("http");
-// const SERVER = HTTP.createServer((request, response) => {
-//     response.writeHead(200, {
-//         "Content-Type": "text/html; charset=utf-8",
-//         "NodeApp": process.versions.node,
-//     });
-//     response.write("HELLO WORLD");
-
-//     response.end();
-// });
-// SERVER.listen(process.env.PORT);

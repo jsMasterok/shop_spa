@@ -2,11 +2,10 @@
   "name": "shop_spa",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://crm.sitniks.com",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node_modules/cross-env/src/bin/cross-env.js NODE_ENV=production node server.js",
     "lint": "next lint"
   },
   "dependencies": {
